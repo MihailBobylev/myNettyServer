@@ -51,11 +51,11 @@ public class MainGraph {
         audsService.saveAud(auds);
 
         StudentsService studentsService = new StudentsService();
-        Students students = new Students("автоматы","инфа","17-ИСбо-2а");
+        Students students = new Students("автоматы","инфа","17-ИСбо-2а","json");
         studentsService.saveStudent(students);
 
         TeachersService teachersService = new TeachersService();
-        Teachers teachers = new Teachers("Папич");
+        Teachers teachers = new Teachers("Папич","json");
         teachersService.saveTeacher(teachers);
     }
 }

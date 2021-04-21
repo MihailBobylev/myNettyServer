@@ -19,13 +19,18 @@ public class Students {
     @Column(name = "groupp")
     String groupp;
 
+    @Column(name = "schedule")
+    String schedule;
+
+
     public Students() {
     }
 
-    public Students(String institute, String direction, String groupp) {
+    public Students(String institute, String direction, String groupp, String schedule) {
         this.institute = institute;
         this.direction = direction;
         this.groupp = groupp;
+        this.schedule = schedule;
     }
 
     public Integer getId() {
@@ -48,11 +53,19 @@ public class Students {
         this.direction = direction;
     }
 
-    public String getGroup() {
+    public String getGroupp() {
         return groupp;
     }
 
-    public void setGroup(String group) {
+    public void setGroupp(String groupp) {
         this.groupp = groupp;
+    }
+
+    public String getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(String schedule) {
+        this.schedule = schedule;
     }
 }
