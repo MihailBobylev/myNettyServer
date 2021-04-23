@@ -39,7 +39,7 @@ public class AudsDAO {
     }
 
     public List<Auds> findAll() {
-        List<Auds> auds = (List<Auds>)  HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("From auds").list();
+        List<Auds> auds = (List<Auds>) HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("From Auds").list();
         return auds;
     }
 }
