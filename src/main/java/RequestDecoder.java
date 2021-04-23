@@ -18,7 +18,7 @@ public class RequestDecoder extends ReplayingDecoder<RequestData> {
         data.setAuditor(in.readCharSequence(audLen, charset).toString());// получаем аудиторию от клиента
 
         int strLen = in.readInt();
-        data.setStringValue(in.readCharSequence(strLen, charset).toString());// получаем строку от клиента
+        data.setName(in.readCharSequence(strLen, charset).toString());// получаем строку от клиента
         out.add(data);
     }
 }

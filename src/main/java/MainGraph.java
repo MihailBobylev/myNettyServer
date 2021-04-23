@@ -1,8 +1,12 @@
+import javassist.expr.NewArray;
 import models.*;
 import services.*;
 
+import java.io.IOException;
+import java.util.List;
+
 public class MainGraph {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         /*Graph graph = new Graph(5);
 
         graph.insertArea(1,"E", 3, "A");
@@ -46,16 +50,36 @@ public class MainGraph {
         hallwaySevice.updateHallway(hallway);*/
 
         // Аудитории, преподы и группы
-        AudsService audsService = new AudsService();
-        Auds auds = new Auds("E","325","json");
-        audsService.saveAud(auds);
+       /* AudsService audsService = new AudsService();
+        //Auds auds = new Auds("E","325","json");
+        //audsService.saveAud(auds);
 
         StudentsService studentsService = new StudentsService();
-        Students students = new Students("автоматы","инфа","17-ИСбо-2а","json");
-        studentsService.saveStudent(students);
+        //Students students = new Students("автоматы","инфа","17-ИСбо-2а","json");
+        //studentsService.saveStudent(students);
 
         TeachersService teachersService = new TeachersService();
-        Teachers teachers = new Teachers("Папич","json");
-        teachersService.saveTeacher(teachers);
+        //Teachers teachers = new Teachers("Папич","json");
+        //teachersService.saveTeacher(teachers);
+
+        List<Auds> la = audsService.findAllAuds();
+        System.out.println(la.get(0).getNumber());
+        System.out.println(studentsService.findAllStudents().get(0).getGroupp());
+        System.out.println(teachersService.findAllTeachers().get(0).getName());*/
+
+        // Расписание препода
+        /*ResponseData responseData = new ResponseData();
+        ProcessingHandler p = new ProcessingHandler();
+        responseData = p.getTeacher("Бабенко А.С.");
+        System.out.println(responseData.getTeacherName());
+        System.out.println(responseData.getSchedule());*/
+
+        // Расписание группы
+        ResponseData responseData = new ResponseData();
+        ProcessingHandler p = new ProcessingHandler();
+        responseData = p.getSchedule("Институт автоматизированных систем и технологий", "09.03.02 Информационные системы и технологии направленность (профиль) Информационные системы и технологии","17-ИСбо-2");
+        System.out.println(responseData.getGroupName());
+        System.out.println(responseData.getSchedule());
     }
+
 }

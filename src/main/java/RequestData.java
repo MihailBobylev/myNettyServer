@@ -1,6 +1,6 @@
 public class RequestData {
     private String auditor;
-    private String stringValue;
+    private String name;
 
     public String getAuditor() {
         return auditor;
@@ -10,13 +10,12 @@ public class RequestData {
         this.auditor = auditor;
     }
 
-    public String getStringValue() {
-        return stringValue;
+    public String getName() {
+        return name;
     }
 
-    public void setStringValue(String stringValue) {
-        this.stringValue = stringValue;
+    public void setName(String name) {
+        this.name = name;
     }
-
     // standard getters and setters
 }

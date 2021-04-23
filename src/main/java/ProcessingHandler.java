@@ -4,6 +4,9 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import services.AudsService;
+import services.StudentsService;
+import services.TeachersService;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -19,48 +22,45 @@ import java.util.Map;
 
 public class ProcessingHandler extends ChannelInboundHandlerAdapter {
     private Calendar calendar = Calendar.getInstance();
-    Connection c;
-    Statement stmt;
+    AudsService audsService = new AudsService();
+    StudentsService studentsService = new StudentsService();
+    TeachersService teachersService = new TeachersService();
+
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         RequestData requestData = (RequestData) msg;
         String schedule = "";
         //ResultSet rs;
         //ResponseData responseData = new ResponseData();
-        try{
-            Class.forName("org.postgresql.Driver");
-            c = DriverManager
-                    .getConnection("jdbc:postgresql://localhost:5432/univer","postgres", "root");
-            c.setAutoCommit(false);
-            System.out.println("-- Opened database successfully");
+        // Поиск данных в БД
+        // case по параметру (0, 1, 2, 3), опредлеляющему запрос пользователя
+        int flag = 1;
+        switch (flag){
+            case 0: // рапсисание аудитории
+                break;
+            case 1: // расписание препода
+                break;
+            case 2: // расписание группы
+                break;
+            case 3: // поиск пути
+                break;
 
-            String sql = "SELECT id, number, schedule FROM corp_e WHERE number = " + "'" + requestData.getAuditor() + "'" + ";";
-            //--------------- SELECT DATA ------------------
-            stmt = c.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String s2 = rs.getString("number");
-                schedule  = rs.getString("schedule");
-                System.out.println(id + " " + s2 + " " + schedule);
-            }
-            rs.close();
-            stmt.close();
-            c.commit();
-            System.out.println("-- Operation SELECT done successfully");
         }
-        catch (Exception e) {
-            e.printStackTrace();
-            System.err.println(e.getClass().getName()+": "+e.getMessage());
-            System.exit(0);
-        }
-
+        //-----------------------
         ResponseData responseData = new ResponseData();
         if(schedule == "") {
-            responseData = getCurrentClass(requestData.getAuditor(), 1, 2, 0);
+            //Расписание группы
+
+            //Расписание препода
+            /*responseData = getTeacher("Бабенко А.С.");
+            System.out.println(responseData.getTeacherName());
+            System.out.println(responseData.getSchedule());*/
+
+            //расписание аудитории
+            /*responseData = getCurrentClass(requestData.getAuditor(), 1, 2, 0);
             System.out.println(responseData.getClassName());
             System.out.println(responseData.getGroupName());
-            System.out.println(responseData.getTeacherName());
+            System.out.println(responseData.getTeacherName());*/
         }
         else {
 
@@ -68,21 +68,36 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         //responseData.setIntValue(requestData.getIntValue() * 2);
         ChannelFuture future = ctx.writeAndFlush(responseData); //responseData
         future.addListener(ChannelFutureListener.CLOSE);
-        System.out.println(requestData.getStringValue());
+        System.out.println(requestData.getName());
     }
     public String getUrl(){
 
         return "https://ksu.edu.ru/timetable/" + calendar.get(Calendar.YEAR) + "_" + (calendar.get(Calendar.MONTH)/8 + 1) + "/timetable.php";
 
     }
-    public ResponseData getCurrentClass(String room, int dayOfWeek, int lessonNumber, int week) throws IOException, ClassNotFoundException, SQLException {
+    public ResponseData getCurrentClass(String build, String room, int dayOfWeek, int lessonNumber, int week) throws IOException {
         Map<String, String> params = new HashMap<String, String>();
+        params.put("action", "getbuildings");
+
+        String buildingsJSON = doPostQuery(getUrl(), params); // список всех корпусов
+        JSONArray jObj = new JSONArray(buildingsJSON);
+        String post_id = null;
+        for (int i = 0; i < jObj.length(); i++){
+            if (jObj.getJSONObject(i).getString("title").equals(build)) {
+                post_id = jObj.getJSONObject(i).getString("id");
+                break;
+            }
+        }
+        if (post_id == null)
+            return null;
+
+        params = new HashMap<String, String>();
         params.put("action","getauds");
-        params.put("id", "5");// корпус Е
+        params.put("id", post_id);// корпус Е
 
         String roomsJSON = doPostQuery(getUrl(), params); //"https://ksu.edu.ru/timetable/2020_1/timetable.php"
-        JSONArray jObj = new JSONArray(roomsJSON);
-        String post_id = null;
+        jObj = new JSONArray(roomsJSON);
+        post_id = null;
         for (int i = 0; i < jObj.length(); i++){
             if (jObj.getJSONObject(i).getString("title").equals("Е-" + room)) {
                 post_id = jObj.getJSONObject(i).getString("id");
@@ -101,19 +116,8 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         jObj = new JSONArray(ttJSON);
 
         // Записываем расписание для аудитории в БД
-        Class.forName("org.postgresql.Driver");
-        c = DriverManager
-                .getConnection("jdbc:postgresql://localhost:5432/univer","postgres", "root");
-        c.setAutoCommit(false);
-        stmt = c.createStatement();
-        String sql2 = "INSERT INTO corp_e (number, schedule) VALUES (325, " + "'" + jObj + "'" + ");";
-        stmt.executeUpdate(sql2);
 
-        stmt.close();
-        c.commit();
-        System.out.println("-- Records created successfully");
         //---------------------------------------------
-
 
         String x = String.valueOf(dayOfWeek);
         String y = String.valueOf(lessonNumber);
@@ -146,6 +150,117 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
 
     }
 
+    public ResponseData getTeacher(String name) throws IOException {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("action", "getteachers");
+
+        String teachersJSON = doPostQuery(getUrl(), params); // список всех преподов
+        JSONArray jObj = new JSONArray(teachersJSON);
+        String post_id = null;
+        for (int i = 0; i < jObj.length(); i++){
+            if (jObj.getJSONObject(i).getString("title").equals(name)) {
+                post_id = jObj.getJSONObject(i).getString("id");
+                break;
+            }
+        }
+        if (post_id == null)
+            return null;
+        //--------------------------------
+
+        params = new HashMap<String, String>();
+        params.put("action", "gettimetable");
+        params.put("mode","teacher");
+        params.put("id", post_id);
+
+        teachersJSON = doPostQuery(getUrl(), params); // получаем всё расписание конкретного препода
+        jObj = new JSONArray(teachersJSON);
+        if (jObj.length() == 0)
+            return null;
+        else
+        {
+            // Записываем расписание для препода в БД
+
+            //---------------------------------------------
+
+            ResponseData l = new ResponseData();
+            l.setTeacherName(name);
+            l.setSchedule(jObj.toString());
+            return l;
+        }
+    }
+
+    public ResponseData getSchedule(String facultet, String direction, String group) throws IOException {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("action", "getfaculties");
+
+        String facultiesJSON = doPostQuery(getUrl(), params); // список всех факультетов
+        JSONArray jObj = new JSONArray(facultiesJSON);
+        String post_id = null;
+        for (int i = 0; i < jObj.length(); i++){
+            if (jObj.getJSONObject(i).getString("title").equals(facultet)) {
+                post_id = jObj.getJSONObject(i).getString("id");
+                break;
+            }
+        }
+        if (post_id == null)
+            return null;
+        //--------------------------------
+
+        params = new HashMap<String, String>();
+        params.put("action", "getbranches");
+        params.put("id", post_id);
+
+        facultiesJSON = doPostQuery(getUrl(), params); // получаем все направления подготовки
+        jObj = new JSONArray(facultiesJSON);
+        post_id = null;
+        for (int i = 0; i < jObj.length(); i++){
+            if (jObj.getJSONObject(i).getString("title").equals(direction)) {
+                post_id = jObj.getJSONObject(i).getString("id");
+                break;
+            }
+        }
+        if (post_id == null)
+            return null;
+        //---------------------------------
+        params.clear();
+        params = new HashMap<String, String>();
+        params.put("action", "getgroups");
+        params.put("id", post_id);
+
+        facultiesJSON = doPostQuery(getUrl(), params); // Все группы
+        jObj = new JSONArray(facultiesJSON);
+        post_id = null;
+        for (int i = 0; i < jObj.length(); i++){
+            if (jObj.getJSONObject(i).getString("title").equals(group)) {
+                post_id = jObj.getJSONObject(i).getString("id");
+                break;
+            }
+        }
+        if (post_id == null)
+            return null;
+        //----------------------------------
+        params.clear();
+        params = new HashMap<String, String>();
+        params.put("action", "gettimetable");
+        params.put("mode", "student");
+        params.put("id", post_id);
+
+        facultiesJSON = doPostQuery(getUrl(), params); // Все группы
+        jObj = new JSONArray(facultiesJSON);
+
+        if (jObj.length() == 0)
+            return null;
+        else
+        {
+            // Записываем расписание для препода в БД
+
+            //---------------------------------------------
+            ResponseData l = new ResponseData();
+            l.setGroupName(group);
+            l.setSchedule(jObj.toString());
+            return l;
+        }
+    }
     private static String doPostQuery(String url, Map<String, String> params) throws IOException {
         URL buildingUrl = new URL(url);
         HttpURLConnection httpURLConnection = (HttpURLConnection) buildingUrl.openConnection();
