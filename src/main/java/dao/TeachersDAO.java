@@ -5,12 +5,22 @@ import models.Students;
 import models.Teachers;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 
 public class TeachersDAO {
     public Teachers findTeacherById(int id) {
         return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Teachers.class, id);
+    }
+
+    public List<Teachers> findByTeacher(String name) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        List<Teachers> teachers =
+                session.createCriteria(Teachers.class)
+                        .add(Restrictions.eq("name", name))
+                        .list();
+        return teachers;
     }
 
     public void save(Teachers teacher) {

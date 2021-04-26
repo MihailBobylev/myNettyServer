@@ -76,10 +76,22 @@ public class MainGraph {
 
         // Расписание группы
         ResponseData responseData = new ResponseData();
-        ProcessingHandler p = new ProcessingHandler();
-        responseData = p.getSchedule("Институт автоматизированных систем и технологий", "09.03.02 Информационные системы и технологии направленность (профиль) Информационные системы и технологии","17-ИСбо-2");
-        System.out.println(responseData.getGroupName());
-        System.out.println(responseData.getSchedule());
+        /*List<Students> groupSchedule;
+        StudentsService studentsService = new StudentsService();
+        groupSchedule =  studentsService.findByGroup("17-ИСбо-2а");
+        responseData.setGroupName(groupSchedule.get(0).getGroupp());
+        responseData.setSchedule(groupSchedule.get(0).getSchedule());*/
+
+        List<Auds> audsSchedule;
+        AudsService audsService = new AudsService();
+        audsSchedule = audsService.findByAud("E","325");
+        System.out.println(audsSchedule.get(0).getCorp());
+        System.out.println(audsSchedule.get(0).getNumber());
+        System.out.println(audsSchedule.get(0).getSchedule());
+        //ProcessingHandler p = new ProcessingHandler();
+        //responseData = p.getSchedule("Институт автоматизированных систем и технологий", "09.03.02 Информационные системы и технологии направленность (профиль) Информационные системы и технологии","17-ИСбо-2");
+        //System.out.println(responseData.getGroupName());
+        //System.out.println(responseData.getSchedule());
     }
 
 }

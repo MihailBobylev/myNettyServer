@@ -1,8 +1,6 @@
 package services;
 
-import dao.StudentsDAO;
 import dao.TeachersDAO;
-import models.Students;
 import models.Teachers;
 
 import java.util.List;
@@ -31,5 +29,9 @@ public class TeachersService {
 
     public List<Teachers> findAllTeachers() {
         return teachersDAO.findAll();
+    }
+
+    public List<Teachers> findTeacherByName(String name) {
+        return teachersDAO.findByTeacher(name);
     }
 }

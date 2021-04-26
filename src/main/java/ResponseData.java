@@ -3,6 +3,7 @@ public class ResponseData {
     private String groupName;
     private String teacherName;
     private String schedule;
+    private String number;
 
     public String getClassName() {
         return className;
@@ -34,6 +35,14 @@ public class ResponseData {
 
     public void setSchedule(String schedule) {
         this.schedule = schedule;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     /*public ResponseData(String className, String groupName, String teacherName) {

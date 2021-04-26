@@ -4,14 +4,26 @@ import config.HibernateSessionFactoryUtil;
 import models.Area;
 import models.Auds;
 import models.Hallway;
+import models.Students;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 
 public class AudsDAO {
     public Auds findAudsById(int id) {
         return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Auds.class, id);
+    }
+
+    public List<Auds> findByAud(String corp, String aud) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        List<Auds> auds =
+                session.createCriteria(Auds.class)
+                        .add(Restrictions.eq("corp", corp))
+                        .add(Restrictions.eq("number", aud))
+                        .list();
+        return auds;
     }
 
     public void save(Auds auds) {

@@ -2,6 +2,11 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.handler.codec.string.LineSeparator;
+import models.Auds;
+import models.Classroom;
+import models.Students;
+import models.Teachers;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import services.AudsService;
@@ -18,6 +23,7 @@ import java.net.URLEncoder;
 import java.sql.*;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ProcessingHandler extends ChannelInboundHandlerAdapter {
@@ -25,6 +31,10 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
     AudsService audsService = new AudsService();
     StudentsService studentsService = new StudentsService();
     TeachersService teachersService = new TeachersService();
+
+    List<Students> groupSchedule;
+    List<Auds> audsSchedule;
+    List<Teachers> teacherSchedule;
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -34,20 +44,40 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         //ResponseData responseData = new ResponseData();
         // Поиск данных в БД
         // case по параметру (0, 1, 2, 3), опредлеляющему запрос пользователя
+        ResponseData responseData = new ResponseData();
         int flag = 1;
         switch (flag){
-            case 0: // рапсисание аудитории
+            case 0: // расписание аудитории
+                audsSchedule =  audsService.findByAud(requestData.getCorp(), requestData.getAuditor());
+                if (audsSchedule.size() != 0){
+                    responseData.setNumber(audsSchedule.get(0).getNumber());
+                    responseData.setSchedule(audsSchedule.get(0).getSchedule());
+                }else
+                    responseData = getCurrentClass(requestData.getGroup(), requestData.getAuditor(), requestData.getDayOfWeek(), requestData.getLessonNumber(), requestData.getWeek());
+                audsSchedule.clear();
                 break;
             case 1: // расписание препода
+                teacherSchedule =  teachersService.findTeacherByName(requestData.getName());
+                if (teacherSchedule.size() != 0){
+                    responseData.setTeacherName(teacherSchedule.get(0).getName());
+                    responseData.setSchedule(teacherSchedule.get(0).getSchedule());
+                }else
+                    responseData = getTeacher(requestData.getName());
+                teacherSchedule.clear();
                 break;
             case 2: // расписание группы
+                groupSchedule =  studentsService.findByGroup(requestData.getGroup());
+                if (groupSchedule.size() != 0){
+                    responseData.setGroupName(groupSchedule.get(0).getGroupp());
+                    responseData.setSchedule(groupSchedule.get(0).getSchedule());
+                }else
+                    responseData = getSchedule(requestData.getInstitute(), requestData.getDirection(), requestData.getGroup());
+                groupSchedule.clear();
                 break;
             case 3: // поиск пути
                 break;
-
         }
         //-----------------------
-        ResponseData responseData = new ResponseData();
         if(schedule == "") {
             //Расписание группы
 
@@ -75,7 +105,7 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         return "https://ksu.edu.ru/timetable/" + calendar.get(Calendar.YEAR) + "_" + (calendar.get(Calendar.MONTH)/8 + 1) + "/timetable.php";
 
     }
-    public ResponseData getCurrentClass(String build, String room, int dayOfWeek, int lessonNumber, int week) throws IOException {
+    public ResponseData getCurrentClass(String build, String room, String dayOfWeek, String lessonNumber, String week) throws IOException {
         Map<String, String> params = new HashMap<String, String>();
         params.put("action", "getbuildings");
 
@@ -116,12 +146,12 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         jObj = new JSONArray(ttJSON);
 
         // Записываем расписание для аудитории в БД
-
+        audsService.saveAud(new Auds(build, room, jObj.toString()));
         //---------------------------------------------
 
-        String x = String.valueOf(dayOfWeek);
-        String y = String.valueOf(lessonNumber);
-        String n = String.valueOf(week);
+        String x = dayOfWeek;
+        String y = lessonNumber;
+        String n = week;
         String className = null;
         String groupName = null;
         String teacherName = null;
@@ -179,7 +209,7 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         else
         {
             // Записываем расписание для препода в БД
-
+            teachersService.saveTeacher(new Teachers(name, jObj.toString()));
             //---------------------------------------------
 
             ResponseData l = new ResponseData();
@@ -245,15 +275,15 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         params.put("mode", "student");
         params.put("id", post_id);
 
-        facultiesJSON = doPostQuery(getUrl(), params); // Все группы
+        facultiesJSON = doPostQuery(getUrl(), params); // Расписание для группы
         jObj = new JSONArray(facultiesJSON);
 
         if (jObj.length() == 0)
             return null;
         else
         {
-            // Записываем расписание для препода в БД
-
+            // Записываем расписание для группы в БД
+            studentsService.saveStudent(new Students(facultet, direction, group, jObj.toString()));
             //---------------------------------------------
             ResponseData l = new ResponseData();
             l.setGroupName(group);

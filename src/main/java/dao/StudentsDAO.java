@@ -1,16 +1,25 @@
 package dao;
 
 import config.HibernateSessionFactoryUtil;
-import models.Auds;
 import models.Students;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 
 public class StudentsDAO {
     public Students findStudentById(int id) {
         return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Students.class, id);
+    }
+
+    public List<Students> findByGroup(String groupp) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        List<Students> students =
+                session.createCriteria(Students.class)
+                        .add(Restrictions.eq("groupp", groupp))
+                        .list();
+        return students;
     }
 
     public void save(Students student) {

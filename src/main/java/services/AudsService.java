@@ -5,6 +5,7 @@ import dao.AudsDAO;
 import models.Area;
 import models.Auds;
 import models.Hallway;
+import models.Students;
 
 import java.util.List;
 
@@ -34,4 +35,7 @@ public class AudsService {
         return audsDAO.findAll();
     }
 
+    public List<Auds> findByAud(String corp, String aud) {
+        return audsDAO.findByAud(corp, aud);
+    }
 }
