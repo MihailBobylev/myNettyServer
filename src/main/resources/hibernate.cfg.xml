@@ -2,7 +2,7 @@
 <hibernate-configuration xmlns="http://www.hibernate.org/xsd/orm/cfg">
     <session-factory>
         <!--<property name="connection.url">jdbc:sqlite:C:/SQLite/Slovar.db</property>-->
-        <property name="connection.url">jdbc:sqlite:C:/Users/Михаил/IdeaProjects/myNettyServer/db/univer.db</property>
+        <property name="connection.url">jdbc:sqlite:C:/Users/mbobylev/IdeaProjects/myNettyServer/db/univer.db</property>
         <property name="connection.driver_class">org.sqlite.JDBC</property>
         <property name="connection.username"></property>
         <property name="connection.password"></property>
