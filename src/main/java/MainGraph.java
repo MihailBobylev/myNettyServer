@@ -7,21 +7,6 @@ import java.util.List;
 
 public class MainGraph {
     public static void main(String[] args) throws IOException {
-        /*Graph graph = new Graph(5);
-
-        graph.insertArea(1,"E", 3, "A");
-        graph.insertArea(2,"E", 3, "B");
-        graph.insertArea(3,"E", 3, "C");
-        graph.insertArea(4,"E", 3, "D");
-        graph.insertArea(5,"E", 3, "E");
-
-        graph.insertEdge(0, 1);
-        graph.insertEdge(1, 2);
-        graph.insertEdge(2, 3);
-        graph.insertEdge(3, 4);
-
-        graph.dfs(0);*/
-
         // Граф
         /*AreaService areaService = new AreaService();
         Area area1 = new Area("E",3,"A");
@@ -68,26 +53,50 @@ public class MainGraph {
         System.out.println(teachersService.findAllTeachers().get(0).getName());*/
 
         // Расписание препода
-        /*ResponseData responseData = new ResponseData();
+        ResponseData responseData = new ResponseData();
         ProcessingHandler p = new ProcessingHandler();
         responseData = p.getTeacher("Бабенко А.С.");
+        System.out.println("Расписание с сатйта КГУ");
         System.out.println(responseData.getTeacherName());
-        System.out.println(responseData.getSchedule());*/
+        System.out.println(responseData.getSchedule());
+        System.out.println("-------------------------------");
+
+        responseData = p.getSchedule("Институт автоматизированных систем и технологий", "09.03.02 Информационные системы и технологии направленность (профиль) Информационные системы и технологии","17-ИСбо-2");
+        System.out.println(responseData.getGroupName());
+        System.out.println(responseData.getSchedule());
+        System.out.println("-------------------------------");
+
+        responseData = p.getCurrentClass("Е","325","1","2","0");
+        System.out.println(responseData.getClassName());
+        System.out.println(responseData.getGroupName());
+        System.out.println(responseData.getTeacherName());
+        System.out.println("-------------------------------");
+
 
         // Расписание группы
-        ResponseData responseData = new ResponseData();
-        /*List<Students> groupSchedule;
+        //ResponseData responseData = new ResponseData();
+        List<Students> groupSchedule;
         StudentsService studentsService = new StudentsService();
-        groupSchedule =  studentsService.findByGroup("17-ИСбо-2а");
-        responseData.setGroupName(groupSchedule.get(0).getGroupp());
-        responseData.setSchedule(groupSchedule.get(0).getSchedule());*/
+        groupSchedule =  studentsService.findByGroup("17-ИСбо-2");
+        System.out.println("Расписание из БД");
+        System.out.println(groupSchedule.get(0).getGroupp());
+        System.out.println(groupSchedule.get(0).getSchedule());
+        System.out.println("-------------------------------");
 
         List<Auds> audsSchedule;
         AudsService audsService = new AudsService();
-        audsSchedule = audsService.findByAud("E","325");
+        audsSchedule = audsService.findByAud("Е","325");
         System.out.println(audsSchedule.get(0).getCorp());
         System.out.println(audsSchedule.get(0).getNumber());
         System.out.println(audsSchedule.get(0).getSchedule());
+        System.out.println("-------------------------------");
+
+        List<Teachers> teacherSchedule;
+        TeachersService teachersService = new TeachersService();
+        teacherSchedule = teachersService.findTeacherByName("Бабенко А.С.");
+        System.out.println(teacherSchedule.get(0).getName());
+        System.out.println(teacherSchedule.get(0).getSchedule());
+
         //ProcessingHandler p = new ProcessingHandler();
         //responseData = p.getSchedule("Институт автоматизированных систем и технологий", "09.03.02 Информационные системы и технологии направленность (профиль) Информационные системы и технологии","17-ИСбо-2");
         //System.out.println(responseData.getGroupName());

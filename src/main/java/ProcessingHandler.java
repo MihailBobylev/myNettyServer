@@ -113,6 +113,7 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         JSONArray jObj = new JSONArray(buildingsJSON);
         String post_id = null;
         for (int i = 0; i < jObj.length(); i++){
+            String s = jObj.getJSONObject(i).getString("title");
             if (jObj.getJSONObject(i).getString("title").equals(build)) {
                 post_id = jObj.getJSONObject(i).getString("id");
                 break;
