@@ -1,4 +1,4 @@
-import javassist.expr.NewArray;
+import dao.LessonBySubgroupDAO;
 import models.*;
 import services.*;
 
@@ -21,9 +21,9 @@ public class MainGraph {
         area1.addStartHallway(hallway);
         area2.addEndHallway(hallway);
 
-        hallwaySevice.saveHallway(hallway);
+        hallwaySevice.saveHallway(hallway);*/
 
-        Classroom classroom1 = new Classroom(319,"право","первый");
+        /*Classroom classroom1 = new Classroom(319,"право","первый");
         Classroom classroom2 = new Classroom(321,"право","второй");
         Classroom classroom3 = new Classroom(323,"право","третий");
         classroom1.setHallway(hallway);
@@ -53,7 +53,7 @@ public class MainGraph {
         System.out.println(teachersService.findAllTeachers().get(0).getName());*/
 
         // Расписание препода
-        ResponseData responseData = new ResponseData();
+        /*ResponseData responseData = new ResponseData();
         ProcessingHandler p = new ProcessingHandler();
         responseData = p.getTeacher("Бабенко А.С.");
         System.out.println("Расписание с сатйта КГУ");
@@ -70,17 +70,17 @@ public class MainGraph {
         System.out.println(responseData.getClassName());
         System.out.println(responseData.getGroupName());
         System.out.println(responseData.getTeacherName());
-        System.out.println("-------------------------------");
+        System.out.println("-------------------------------");*/
 
 
         // Расписание группы
         //ResponseData responseData = new ResponseData();
-        List<Students> groupSchedule;
+        /*List<Students> groupSchedule;
         StudentsService studentsService = new StudentsService();
         groupSchedule =  studentsService.findByGroup("17-ИСбо-2");
         System.out.println("Расписание из БД");
         System.out.println(groupSchedule.get(0).getGroupp());
-        System.out.println(groupSchedule.get(0).getSchedule());
+        System.out.println(groupSchedule.get(0).getSubgroup());
         System.out.println("-------------------------------");
 
         List<Auds> audsSchedule;
@@ -88,19 +88,42 @@ public class MainGraph {
         audsSchedule = audsService.findByAud("Е","325");
         System.out.println(audsSchedule.get(0).getCorp());
         System.out.println(audsSchedule.get(0).getNumber());
-        System.out.println(audsSchedule.get(0).getSchedule());
         System.out.println("-------------------------------");
 
         List<Teachers> teacherSchedule;
         TeachersService teachersService = new TeachersService();
         teacherSchedule = teachersService.findTeacherByName("Бабенко А.С.");
-        System.out.println(teacherSchedule.get(0).getName());
-        System.out.println(teacherSchedule.get(0).getSchedule());
+        System.out.println(teacherSchedule.get(0).getName());*/
 
         //ProcessingHandler p = new ProcessingHandler();
         //responseData = p.getSchedule("Институт автоматизированных систем и технологий", "09.03.02 Информационные системы и технологии направленность (профиль) Информационные системы и технологии","17-ИСбо-2");
         //System.out.println(responseData.getGroupName());
         //System.out.println(responseData.getSchedule());
+
+        AudsService audsService = new AudsService();
+        Auds auds = new Auds("E","325");
+        audsService.saveAud(auds);
+
+        TeachersService teachersService = new TeachersService();
+        Teachers teachers = new Teachers("Папич");
+        teachersService.saveTeacher(teachers);
+
+        StudentsService studentsService = new StudentsService();
+        Students students = new Students("inst","direct","17-is","a");
+        studentsService.saveStudent(students);
+
+        LessonService lessonService = new LessonService();
+        Lesson lesson = new Lesson("лекция", "0","Мультимедиа", "17-is","a","4","1");
+        lesson.setTeacher(teachers);
+        lesson.setAud(auds);
+        //auds.addLesson(lesson);
+        lessonService.saveLesson(lesson);
+
+        LessonBySubgroupDAO lessonBySubgroupDAO = new LessonBySubgroupDAO();
+        LessonBySubgroup lessonBySubgroup = new LessonBySubgroup();
+        lessonBySubgroup.setLesson(lesson);
+        lessonBySubgroup.setStudent(students);
+        lessonBySubgroupDAO.save(lessonBySubgroup);
     }
 
 }

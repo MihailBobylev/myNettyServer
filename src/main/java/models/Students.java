@@ -1,6 +1,8 @@
 package models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "students")
@@ -19,18 +21,38 @@ public class Students {
     @Column(name = "groupp")
     String groupp;
 
-    @Column(name = "schedule")
-    String schedule;
+    @Column(name = "subgroup")
+    String subgroup;
 
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<LessonBySubgroup> lessonBySubgroups;
 
     public Students() {
     }
 
-    public Students(String institute, String direction, String groupp, String schedule) {
+    public Students(String institute, String direction, String groupp, String subgroup) {
         this.institute = institute;
         this.direction = direction;
         this.groupp = groupp;
-        this.schedule = schedule;
+        this.subgroup = subgroup;
+        this.lessonBySubgroups = new ArrayList<LessonBySubgroup>();
+    }
+
+    public void addLessonBySubgroup(LessonBySubgroup lessonBySubgroup) {
+        lessonBySubgroup.setStudent(this);
+        lessonBySubgroups.add(lessonBySubgroup);
+    }
+
+    public void removeLessonBySubgroup(LessonBySubgroup lessonBySubgroup) {
+        lessonBySubgroups.remove(lessonBySubgroup);
+    }
+
+    public List<LessonBySubgroup> getLessonBySubgroups() {
+        return lessonBySubgroups;
+    }
+
+    public void setLessonBySubgroups(List<LessonBySubgroup> lessonBySubgroups) {
+        this.lessonBySubgroups = lessonBySubgroups;
     }
 
     public Integer getId() {
@@ -61,11 +83,11 @@ public class Students {
         this.groupp = groupp;
     }
 
-    public String getSchedule() {
-        return schedule;
+    public String getSubgroup() {
+        return subgroup;
     }
 
-    public void setSchedule(String schedule) {
-        this.schedule = schedule;
+    public void setSubgroup(String subgroup) {
+        this.subgroup = subgroup;
     }
 }

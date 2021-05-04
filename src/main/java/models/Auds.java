@@ -1,6 +1,8 @@
 package models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "auds")
@@ -16,16 +18,25 @@ public class Auds {
     @Column(name = "number")
     String number;
 
-    @Column(name = "schedule")
-    String schedule;
+    @OneToMany(mappedBy = "aud", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Lesson> lessons;
 
     public Auds() {
     }
 
-    public Auds(String corp, String number, String schedule) {
+    public Auds(String corp, String number) {
         this.corp = corp;
         this.number = number;
-        this.schedule = schedule;
+        lessons = new ArrayList<Lesson>();
+    }
+
+    public void addLesson(Lesson lesson) {
+        lesson.setAud(this);
+        lessons.add(lesson);
+    }
+
+    public void removeLesson(Lesson lesson) {
+        lessons.remove(lesson);
     }
 
     public Integer getId() {
@@ -48,11 +59,11 @@ public class Auds {
         this.number = number;
     }
 
-    public String getSchedule() {
-        return schedule;
+    public List<Lesson> getLessons() {
+        return lessons;
     }
 
-    public void setSchedule(String schedule) {
-        this.schedule = schedule;
+    public void setLessons(List<Lesson> lessons) {
+        this.lessons = lessons;
     }
 }

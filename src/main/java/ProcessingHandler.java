@@ -2,9 +2,7 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.handler.codec.string.LineSeparator;
 import models.Auds;
-import models.Classroom;
 import models.Students;
 import models.Teachers;
 import org.json.JSONArray;
@@ -20,7 +18,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.sql.*;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -51,7 +48,6 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
                 audsSchedule =  audsService.findByAud(requestData.getCorp(), requestData.getAuditor());
                 if (audsSchedule.size() != 0){
                     responseData.setNumber(audsSchedule.get(0).getNumber());
-                    responseData.setSchedule(audsSchedule.get(0).getSchedule());
                 }else
                     responseData = getCurrentClass(requestData.getGroup(), requestData.getAuditor(), requestData.getDayOfWeek(), requestData.getLessonNumber(), requestData.getWeek());
                 audsSchedule.clear();
@@ -60,7 +56,6 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
                 teacherSchedule =  teachersService.findTeacherByName(requestData.getName());
                 if (teacherSchedule.size() != 0){
                     responseData.setTeacherName(teacherSchedule.get(0).getName());
-                    responseData.setSchedule(teacherSchedule.get(0).getSchedule());
                 }else
                     responseData = getTeacher(requestData.getName());
                 teacherSchedule.clear();
@@ -69,7 +64,7 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
                 groupSchedule =  studentsService.findByGroup(requestData.getGroup());
                 if (groupSchedule.size() != 0){
                     responseData.setGroupName(groupSchedule.get(0).getGroupp());
-                    responseData.setSchedule(groupSchedule.get(0).getSchedule());
+                    responseData.setSchedule(groupSchedule.get(0).getSubgroup());
                 }else
                     responseData = getSchedule(requestData.getInstitute(), requestData.getDirection(), requestData.getGroup());
                 groupSchedule.clear();
@@ -147,7 +142,7 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         jObj = new JSONArray(ttJSON);
 
         // Записываем расписание для аудитории в БД
-        audsService.saveAud(new Auds(build, room, jObj.toString()));
+        audsService.saveAud(new Auds(build, room));
         //---------------------------------------------
 
         String x = dayOfWeek;
@@ -210,7 +205,7 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         else
         {
             // Записываем расписание для препода в БД
-            teachersService.saveTeacher(new Teachers(name, jObj.toString()));
+            teachersService.saveTeacher(new Teachers(name));
             //---------------------------------------------
 
             ResponseData l = new ResponseData();
