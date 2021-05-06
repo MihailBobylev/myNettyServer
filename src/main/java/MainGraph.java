@@ -100,30 +100,33 @@ public class MainGraph {
         //System.out.println(responseData.getGroupName());
         //System.out.println(responseData.getSchedule());
 
-        AudsService audsService = new AudsService();
-        Auds auds = new Auds("E","325");
-        audsService.saveAud(auds);
+//        AudsService audsService = new AudsService();
+//        Auds auds = new Auds("E","325");
+//        audsService.saveAud(auds);
+//
+//        TeachersService teachersService = new TeachersService();
+//        Teachers teachers = new Teachers("Папич");
+//        teachersService.saveTeacher(teachers);
+//
+//        StudentsService studentsService = new StudentsService();
+//        Students students = new Students("inst","direct","17-is","a");
+//        studentsService.saveStudent(students);
+//
+//        LessonService lessonService = new LessonService();
+//        Lesson lesson = new Lesson("лекция", "0","Мультимедиа", "17-is","a","4","1");
+//        lesson.setTeacher(teachers);
+//        lesson.setAud(auds);
+//        //auds.addLesson(lesson);
+//        lessonService.saveLesson(lesson);
+//
+//        LessonBySubgroupDAO lessonBySubgroupDAO = new LessonBySubgroupDAO();
+//        LessonBySubgroup lessonBySubgroup = new LessonBySubgroup();
+//        lessonBySubgroup.setLesson(lesson);
+//        lessonBySubgroup.setStudent(students);
+//        lessonBySubgroupDAO.save(lessonBySubgroup);
+        ProcessingHandler p = new ProcessingHandler();
+        p.getTeacher();
 
-        TeachersService teachersService = new TeachersService();
-        Teachers teachers = new Teachers("Папич");
-        teachersService.saveTeacher(teachers);
-
-        StudentsService studentsService = new StudentsService();
-        Students students = new Students("inst","direct","17-is","a");
-        studentsService.saveStudent(students);
-
-        LessonService lessonService = new LessonService();
-        Lesson lesson = new Lesson("лекция", "0","Мультимедиа", "17-is","a","4","1");
-        lesson.setTeacher(teachers);
-        lesson.setAud(auds);
-        //auds.addLesson(lesson);
-        lessonService.saveLesson(lesson);
-
-        LessonBySubgroupDAO lessonBySubgroupDAO = new LessonBySubgroupDAO();
-        LessonBySubgroup lessonBySubgroup = new LessonBySubgroup();
-        lessonBySubgroup.setLesson(lesson);
-        lessonBySubgroup.setStudent(students);
-        lessonBySubgroupDAO.save(lessonBySubgroup);
     }
 
 }

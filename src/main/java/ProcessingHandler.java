@@ -54,10 +54,10 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
                 break;
             case 1: // расписание препода
                 teacherSchedule =  teachersService.findTeacherByName(requestData.getName());
-                if (teacherSchedule.size() != 0){
+                /*if (teacherSchedule.size() != 0){
                     responseData.setTeacherName(teacherSchedule.get(0).getName());
                 }else
-                    responseData = getTeacher(requestData.getName());
+                    responseData = getTeacher(requestData.getName());*/
                 teacherSchedule.clear();
                 break;
             case 2: // расписание группы
@@ -176,24 +176,23 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
 
     }
 
-    public ResponseData getTeacher(String name) throws IOException {
+    public void getTeacher() throws IOException {
         Map<String, String> params = new HashMap<String, String>();
         params.put("action", "getteachers");
 
         String teachersJSON = doPostQuery(getUrl(), params); // список всех преподов
         JSONArray jObj = new JSONArray(teachersJSON);
-        String post_id = null;
         for (int i = 0; i < jObj.length(); i++){
-            if (jObj.getJSONObject(i).getString("title").equals(name)) {
+            teachersService.saveTeacher(new Teachers(jObj.getJSONObject(i).getString("title")));
+            /*if (jObj.getJSONObject(i).getString("title").equals(name)) {
                 post_id = jObj.getJSONObject(i).getString("id");
                 break;
-            }
+            }*/
         }
-        if (post_id == null)
-            return null;
+
         //--------------------------------
 
-        params = new HashMap<String, String>();
+        /*params = new HashMap<String, String>();
         params.put("action", "gettimetable");
         params.put("mode","teacher");
         params.put("id", post_id);
@@ -212,7 +211,7 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
             l.setTeacherName(name);
             l.setSchedule(jObj.toString());
             return l;
-        }
+        }*/
     }
 
     public ResponseData getSchedule(String facultet, String direction, String group) throws IOException {
