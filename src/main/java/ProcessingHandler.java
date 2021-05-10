@@ -5,6 +5,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import models.Auds;
 import models.Students;
 import models.Teachers;
+import org.hibernate.exception.ConstraintViolationException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import services.AudsService;
@@ -72,24 +73,7 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
             case 3: // поиск пути
                 break;
         }
-        //-----------------------
-        if(schedule == "") {
-            //Расписание группы
 
-            //Расписание препода
-            /*responseData = getTeacher("Бабенко А.С.");
-            System.out.println(responseData.getTeacherName());
-            System.out.println(responseData.getSchedule());*/
-
-            //расписание аудитории
-            /*responseData = getCurrentClass(requestData.getAuditor(), 1, 2, 0);
-            System.out.println(responseData.getClassName());
-            System.out.println(responseData.getGroupName());
-            System.out.println(responseData.getTeacherName());*/
-        }
-        else {
-
-        }
         //responseData.setIntValue(requestData.getIntValue() * 2);
         ChannelFuture future = ctx.writeAndFlush(responseData); //responseData
         future.addListener(ChannelFutureListener.CLOSE);
@@ -176,7 +160,7 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
 
     }
 
-    public void getTeacher() throws IOException {
+    public void FillTeachers() throws IOException {
         Map<String, String> params = new HashMap<String, String>();
         params.put("action", "getteachers");
 
@@ -212,6 +196,26 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
             l.setSchedule(jObj.toString());
             return l;
         }*/
+    }
+    public void FillAuds() throws IOException{
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("action", "getbuildings");
+
+        String buildingsJSON = doPostQuery(getUrl(), params);
+        JSONArray jObj = new JSONArray(buildingsJSON); // список всех корпусов
+        JSONArray jAuds;
+        for (int i = 0; i < jObj.length(); i++){
+            params.clear();
+            params.put("action","getauds");
+            params.put("id", jObj.getJSONObject(i).getString("id"));
+            buildingsJSON = doPostQuery(getUrl(), params);// список всех аудиторий
+            jAuds = new JSONArray(buildingsJSON);
+            for (int j = 0; j < jAuds.length(); j++){
+                audsService.saveAud(new Auds(jObj.getJSONObject(i).getString("title"), jAuds.getJSONObject(j).getString("title")));
+            }
+
+            System.out.println("All auds in: " + jObj.getJSONObject(i).getString("title"));
+        }
     }
 
     public ResponseData getSchedule(String facultet, String direction, String group) throws IOException {

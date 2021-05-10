@@ -99,7 +99,7 @@ public class MainGraph {
         //responseData = p.getSchedule("Институт автоматизированных систем и технологий", "09.03.02 Информационные системы и технологии направленность (профиль) Информационные системы и технологии","17-ИСбо-2");
         //System.out.println(responseData.getGroupName());
         //System.out.println(responseData.getSchedule());
-
+//------------------Тест работы с БД
 //        AudsService audsService = new AudsService();
 //        Auds auds = new Auds("E","325");
 //        audsService.saveAud(auds);
@@ -125,7 +125,8 @@ public class MainGraph {
 //        lessonBySubgroup.setStudent(students);
 //        lessonBySubgroupDAO.save(lessonBySubgroup);
         ProcessingHandler p = new ProcessingHandler();
-        p.getTeacher();
+        //p.FillTeachers();
+        p.FillAuds();
 
     }
 
