@@ -36,4 +36,7 @@ public class StudentsService {
     public List<Students> findByGroup(String group) {
         return studentsDAO.findByGroup(group);
     }
+    public List<Students> findBySubgroup(String subGroup) {
+        return studentsDAO.findBySubgroup(subGroup);
+    }
 }

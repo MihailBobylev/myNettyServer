@@ -47,6 +47,14 @@ public class TeachersDAO {
         session.close();
     }
 
+    public void deleteAll() {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+        session.createQuery("DELETE FROM Teachers").executeUpdate();
+        tx1.commit();
+        session.close();
+    }
+
     public List<Teachers> findAll() {
         List<Teachers> teachers = (List<Teachers>)  HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("From Teachers").list();
         return teachers;

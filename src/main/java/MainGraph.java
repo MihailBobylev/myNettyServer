@@ -104,7 +104,14 @@ public class MainGraph {
 //        Auds auds = new Auds("E","325");
 //        audsService.saveAud(auds);
 //
-//        TeachersService teachersService = new TeachersService();
+        /*TeachersService teachersService = new TeachersService();
+        List<Teachers> teachers = teachersService.findTeacherByName("Глазова Е.Ю.");
+        for (Teachers t: teachers) {
+            if (t.getName() != null)
+                System.out.println(t.getName());
+            else
+                System.out.println("Нет такого");
+        }*/
 //        Teachers teachers = new Teachers("Папич");
 //        teachersService.saveTeacher(teachers);
 //
@@ -126,7 +133,7 @@ public class MainGraph {
 //        lessonBySubgroupDAO.save(lessonBySubgroup);
         ProcessingHandler p = new ProcessingHandler();
         //p.FillTeachers();
-        p.FillAuds();
+        p.FillLessons();
 
     }
 

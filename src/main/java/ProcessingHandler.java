@@ -2,15 +2,11 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import models.Auds;
-import models.Students;
-import models.Teachers;
+import models.*;
 import org.hibernate.exception.ConstraintViolationException;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import services.AudsService;
-import services.StudentsService;
-import services.TeachersService;
+import services.*;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -19,20 +15,20 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ProcessingHandler extends ChannelInboundHandlerAdapter {
     private Calendar calendar = Calendar.getInstance();
     AudsService audsService = new AudsService();
     StudentsService studentsService = new StudentsService();
     TeachersService teachersService = new TeachersService();
+    LessonService lessonService = new LessonService();
+    LessonBySubgroupService lessonBySubgroupService = new LessonBySubgroupService();
 
-    List<Students> groupSchedule;
-    List<Auds> audsSchedule;
-    List<Teachers> teacherSchedule;
+    List<Students> groupSchedule = new ArrayList<Students>();
+    List<Auds> audsSchedule = new ArrayList<Auds>();
+    List<Teachers> teacherSchedule = new ArrayList<Teachers>();
+    List<Lesson> allLessons = new ArrayList<Lesson>();
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -161,17 +157,15 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
     }
 
     public void FillTeachers() throws IOException {
+        teachersService.deleteAll();
         Map<String, String> params = new HashMap<String, String>();
         params.put("action", "getteachers");
 
         String teachersJSON = doPostQuery(getUrl(), params); // список всех преподов
         JSONArray jObj = new JSONArray(teachersJSON);
+        teachersService.saveTeacher(new Teachers("Неизвестно"));
         for (int i = 0; i < jObj.length(); i++){
             teachersService.saveTeacher(new Teachers(jObj.getJSONObject(i).getString("title")));
-            /*if (jObj.getJSONObject(i).getString("title").equals(name)) {
-                post_id = jObj.getJSONObject(i).getString("id");
-                break;
-            }*/
         }
 
         //--------------------------------
@@ -217,7 +211,125 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
             System.out.println("All auds in: " + jObj.getJSONObject(i).getString("title"));
         }
     }
+    public void FillStudents() throws IOException{
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("action", "getfaculties");
 
+        String facultiesJSON = doPostQuery(getUrl(), params);
+        JSONArray jObj = new JSONArray(facultiesJSON); // список всех факультетов
+        JSONArray jDirections;
+        JSONArray jGroups;
+        for (int i = 0; i < jObj.length(); i++){ // по факультетам
+            params.clear();
+            params.put("action", "getbranches");
+            params.put("id", jObj.getJSONObject(i).getString("id"));
+            facultiesJSON = doPostQuery(getUrl(), params);
+            jDirections = new JSONArray(facultiesJSON); // список всех направлений
+            for (int j = 0; j < jDirections.length(); j++){// по направлениям
+                params.clear();
+                params.put("action", "getgroups");
+                params.put("id", jDirections.getJSONObject(j).getString("id"));
+                facultiesJSON = doPostQuery(getUrl(), params);
+                jGroups = new JSONArray(facultiesJSON); // список всех групп
+                for (int x = 0; x < jGroups.length(); x++){// по группам
+
+                    studentsService.saveStudent(new Students(
+                                    jObj.getJSONObject(i).getString("title")
+                                    , jDirections.getJSONObject(j).getString("title")
+                                    , jGroups.getJSONObject(x).getString("title")
+                                    , jGroups.getJSONObject(x).getString("title")));
+                }
+                System.out.println("Save: " + jDirections.getJSONObject(j).getString("title"));
+            }
+        }
+    }
+    public void FillLessons() throws IOException{
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("action", "getfaculties");
+
+        String facultiesJSON = doPostQuery(getUrl(), params);
+        JSONArray jObj = new JSONArray(facultiesJSON); // список всех факультетов
+        JSONArray jDirections;
+        JSONArray jGroups;
+        JSONArray jShedule;
+        for (int i = 0; i < jObj.length(); i++){ // по факультетам
+            params.clear();
+            params.put("action", "getbranches");
+            params.put("id", jObj.getJSONObject(i).getString("id"));
+            facultiesJSON = doPostQuery(getUrl(), params);
+            jDirections = new JSONArray(facultiesJSON); // список всех направлений
+            for (int j = 0; j < jDirections.length(); j++){// по направлениям
+                params.clear();
+                params.put("action", "getgroups");
+                params.put("id", jDirections.getJSONObject(j).getString("id"));
+                facultiesJSON = doPostQuery(getUrl(), params);
+                jGroups = new JSONArray(facultiesJSON); // список всех групп
+                for (int x = 0; x < jGroups.length(); x++){// по группам
+                    params.clear();
+                    params.put("action", "gettimetable");
+                    params.put("mode", "student");
+                    params.put("id", jGroups.getJSONObject(x).getString("id"));
+                    facultiesJSON = doPostQuery(getUrl(), params);
+                    jShedule = new JSONArray(facultiesJSON); // Расписание для группы
+
+                    for (int z = 0; z < jShedule.length(); z++){ // заполнение расписания подгруппы
+                        String[] corpAud = jShedule.getJSONObject(z).getString("subject2").split("-");
+
+                        audsSchedule.clear();
+                        if (jShedule.getJSONObject(z).isNull("subject2"))
+                            audsSchedule.add(new Auds("Неизвестно","Неизвестно"));
+                        else
+                            audsSchedule = audsService.findByAud(corpAud[0], jShedule.getJSONObject(z).getString("subject2")); // поиск аудитории
+
+                        teacherSchedule.clear();
+                        if (jShedule.getJSONObject(z).isNull("subject3"))
+                            teacherSchedule.add(new Teachers("Неизвестно"));
+                        else
+                            teacherSchedule = teachersService.findTeacherByName(jShedule.getJSONObject(z).getString("subject3"));// поиск препода
+
+                        if (teacherSchedule.size() == 0)
+                            teacherSchedule = teachersService.findTeacherByName("Неизвестно");
+
+                        Lesson lesson;
+                        if (jShedule.getJSONObject(z).isNull("subgroup"))
+                        {
+                            lesson = new Lesson(
+                                    jShedule.getJSONObject(z).getString("lessontype")
+                                    , jShedule.getJSONObject(z).getString("n")
+                                    , jShedule.getJSONObject(z).getString("subject1")
+                                    , jGroups.getJSONObject(x).getString("title")
+                                    , jGroups.getJSONObject(x).getString("title")
+                                    , jShedule.getJSONObject(z).getString("y")
+                                    , jShedule.getJSONObject(z).getString("x"));
+                        }else {
+                            groupSchedule = studentsService.findBySubgroup(jShedule.getJSONObject(z).getString("subgroup"));
+                            lesson = new Lesson(
+                                    jShedule.getJSONObject(z).getString("lessontype")
+                                    , jShedule.getJSONObject(z).getString("n")
+                                    , jShedule.getJSONObject(z).getString("subject1")
+                                    , jGroups.getJSONObject(x).getString("title")
+                                    , jShedule.getJSONObject(z).getString("subgroup")
+                                    , jShedule.getJSONObject(z).getString("y")
+                                    , jShedule.getJSONObject(z).getString("x"));
+                        }
+
+                        lesson.setAud(audsSchedule.get(0));
+                        lesson.setTeacher(teacherSchedule.get(0));
+                        lessonService.saveLesson(lesson);
+                    }
+                }
+                System.out.println("Save for: " + jDirections.getJSONObject(j).getString("title"));
+            }
+        }
+        /*allLessons = lessonService.findAllLessons();
+        for (Lesson l: allLessons) {// заполнение смежной таблицы (подгруппа - занятие)
+            groupSchedule = studentsService.findBySubgroup(l.getSubgroup());
+            LessonBySubgroup lessonBySubgroup = new LessonBySubgroup();
+            lessonBySubgroup.setStudent(groupSchedule.get(0));
+            lessonBySubgroup.setLesson(l);
+            lessonBySubgroupService.saveLesson(lessonBySubgroup);
+        }*/
+    }
     public ResponseData getSchedule(String facultet, String direction, String group) throws IOException {
         Map<String, String> params = new HashMap<String, String>();
         params.put("action", "getfaculties");

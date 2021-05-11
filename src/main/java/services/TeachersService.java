@@ -22,6 +22,9 @@ public class TeachersService {
     public void deleteTeacher(Teachers teacher) {
         teachersDAO.delete(teacher);
     }
+    public void deleteAll() {
+        teachersDAO.deleteAll();
+    }
 
     public void updateTeacher(Teachers teacher) {
         teachersDAO.update(teacher);

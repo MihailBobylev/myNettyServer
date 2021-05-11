@@ -22,6 +22,15 @@ public class StudentsDAO {
         return students;
     }
 
+    public List<Students> findBySubgroup(String subGroupp) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        List<Students> students =
+                session.createCriteria(Students.class)
+                        .add(Restrictions.eq("subgroup", subGroupp))
+                        .list();
+        return students;
+    }
+
     public void save(Students student) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
