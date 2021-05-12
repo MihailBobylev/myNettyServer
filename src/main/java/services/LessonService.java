@@ -2,8 +2,10 @@ package services;
 
 import dao.LessonDAO;
 import dao.StudentsDAO;
+import models.Auds;
 import models.Lesson;
 import models.Students;
+import models.Teachers;
 
 import java.util.List;
 
@@ -38,5 +40,17 @@ public class LessonService {
 
     public List<Lesson> findByGroup(String group) {
         return lessonDAO.findByGroup(group);
+    }
+
+    public List<Lesson> findBySubgroup(String subgroup) {
+        return lessonDAO.findBySubgroup(subgroup);
+    }
+
+    public List<Lesson> findByTeacherID(Teachers teacher) {
+        return lessonDAO.findByTeacherID(teacher);
+    }
+
+    public List<Lesson> findByAudID(Auds aud, String numberOfWeek, String numberOfDay, String numberOfClass) {
+        return lessonDAO.findByAudID(aud, numberOfWeek, numberOfDay, numberOfClass);
     }
 }

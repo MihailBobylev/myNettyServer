@@ -114,7 +114,74 @@ public class MainGraph {
 //        Students students = new Students("inst","direct","17-is","a");
 //        studentsService.saveStudent(students);
 //
-//        LessonService lessonService = new LessonService();
+        LessonService lessonService = new LessonService();
+        TeachersService teachersService = new TeachersService();
+        List<Teachers> teachers = teachersService.findTeacherByName("Денисов А.Р.");
+        List<Lesson> lessons = lessonService.findByTeacherID(teachers.get(0));
+        System.out.println("Пары препода");
+        for (Lesson l: lessons) {
+            System.out.println(l.getAud().getNumber());
+            System.out.println(l.getGroupp());
+            System.out.println(l.getSubgroup());
+            System.out.println(l.getNumberOfClass());
+            System.out.println(l.getNumberOfDay());
+            System.out.println(l.getNumberOfWeek());
+            System.out.println(l.getLessonByGroup());
+            System.out.println(l.getLessontype());
+            System.out.println("-------------------------");
+        }
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@");
+          lessons.clear();
+          lessons = lessonService.findByGroup("18-ВТбо-1");
+        System.out.println("Пары группы");
+        for (Lesson l: lessons) {
+            System.out.println(l.getAud().getNumber());
+            System.out.println(l.getGroupp());
+            System.out.println(l.getSubgroup());
+            System.out.println(l.getNumberOfClass());
+            System.out.println(l.getNumberOfDay());
+            System.out.println(l.getNumberOfWeek());
+            System.out.println(l.getLessonByGroup());
+            System.out.println(l.getLessontype());
+            System.out.println("-------------------------");
+        }
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        lessons.clear();
+          lessons = lessonService.findBySubgroup("18-ВТбо-1б");
+        System.out.println("Пары подгруппы");
+        for (Lesson l: lessons) {
+            System.out.println(l.getAud());
+            System.out.println(l.getGroupp());
+            System.out.println(l.getSubgroup());
+            System.out.println(l.getNumberOfClass());
+            System.out.println(l.getNumberOfDay());
+            System.out.println(l.getNumberOfWeek());
+            System.out.println(l.getLessonByGroup());
+            System.out.println(l.getLessontype());
+            System.out.println("-------------------------");
+        }
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        AudsService audsService = new AudsService();
+        lessons.clear();
+          lessons = lessonService.findByAudID(audsService.findAuds(832), "0","4","4");
+        System.out.println("Пара в аудитории");
+        for (Lesson l: lessons) {
+            System.out.println(l.getAud().getNumber());
+            System.out.println(l.getGroupp());
+            System.out.println(l.getSubgroup());
+            System.out.println(l.getNumberOfClass());
+            System.out.println(l.getNumberOfDay());
+            System.out.println(l.getNumberOfWeek());
+            System.out.println(l.getLessonByGroup());
+            System.out.println(l.getLessontype());
+            System.out.println("-------------------------");
+        }
 //        Lesson lesson = new Lesson("лекция", "0","Мультимедиа", "17-is","a","4","1");
 //        lesson.setTeacher(teachers);
 //        lesson.setAud(auds);
@@ -126,11 +193,11 @@ public class MainGraph {
 //        lessonBySubgroup.setLesson(lesson);
 //        lessonBySubgroup.setStudent(students);
 //        lessonBySubgroupDAO.save(lessonBySubgroup);
-        ProcessingHandler p = new ProcessingHandler();
+        //ProcessingHandler p = new ProcessingHandler();
         //p.FillAuds();
         //p.FillTeachers();
         //p.FillLessons();
-        p.FillLessonBySubgroup();
+        //p.FillLessonBySubgroup();
     }
 
 }

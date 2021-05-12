@@ -1,8 +1,10 @@
 package dao;
 
 import config.HibernateSessionFactoryUtil;
+import models.Auds;
 import models.Lesson;
 import models.Students;
+import models.Teachers;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
@@ -17,8 +19,38 @@ public class LessonDAO {
     public List<Lesson> findByGroup(String groupp) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         List<Lesson> lessons =
-                session.createCriteria(Students.class)
+                session.createCriteria(Lesson.class)
                         .add(Restrictions.eq("groupp", groupp))
+                        .list();
+        return lessons;
+    }
+
+    public List<Lesson> findBySubgroup(String subgroupp) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        List<Lesson> lessons =
+                session.createCriteria(Lesson.class)
+                        .add(Restrictions.eq("subgroup", subgroupp))
+                        .list();
+        return lessons;
+    }
+
+    public List<Lesson> findByTeacherID(Teachers teacher) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        List<Lesson> lessons =
+                session.createCriteria(Lesson.class)
+                        .add(Restrictions.eq("teacher", teacher))
+                        .list();
+        return lessons;
+    }
+
+    public List<Lesson> findByAudID(Auds aud, String numberOfWeek, String numberOfDay, String numberOfClass) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        List<Lesson> lessons =
+                session.createCriteria(Lesson.class)
+                        .add(Restrictions.eq("aud", aud))
+                        .add(Restrictions.eq("numberOfWeek", numberOfWeek))
+                        .add(Restrictions.eq("numberOfDay", numberOfDay))
+                        .add(Restrictions.eq("numberOfClass", numberOfClass))
                         .list();
         return lessons;
     }
