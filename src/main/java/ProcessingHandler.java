@@ -192,12 +192,14 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         }*/
     }
     public void FillAuds() throws IOException{
+        audsService.deleteAllAuds();
         Map<String, String> params = new HashMap<String, String>();
         params.put("action", "getbuildings");
 
         String buildingsJSON = doPostQuery(getUrl(), params);
         JSONArray jObj = new JSONArray(buildingsJSON); // список всех корпусов
         JSONArray jAuds;
+        audsService.saveAud(new Auds("Неизвестно", "Неизвестно"));
         for (int i = 0; i < jObj.length(); i++){
             params.clear();
             params.put("action","getauds");
@@ -244,6 +246,7 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         }
     }
     public void FillLessons() throws IOException{
+        lessonService.deleteAllLesson();
         Map<String, String> params = new HashMap<String, String>();
         params.put("action", "getfaculties");
 
@@ -265,25 +268,44 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
                 facultiesJSON = doPostQuery(getUrl(), params);
                 jGroups = new JSONArray(facultiesJSON); // список всех групп
                 for (int x = 0; x < jGroups.length(); x++){// по группам
+
+                    /*List<Lesson> lesson2 = lessonService.findByGroup(jGroups.getJSONObject(x).getString("title"));
+                    if (lesson2.size() != 0)
+                        continue;*/
+
                     params.clear();
                     params.put("action", "gettimetable");
                     params.put("mode", "student");
                     params.put("id", jGroups.getJSONObject(x).getString("id"));
                     facultiesJSON = doPostQuery(getUrl(), params);
                     jShedule = new JSONArray(facultiesJSON); // Расписание для группы
-
+                    String[] tmp = {"Неизвестно", "Неизвестно"};
+                    String[] corpAud = new String[2];
                     for (int z = 0; z < jShedule.length(); z++){ // заполнение расписания подгруппы
-                        String[] corpAud = jShedule.getJSONObject(z).getString("subject2").split("-");
+                        try {
+                            if (jShedule.getJSONObject(z).isNull("subject2"))
+                            {
+                                corpAud = tmp;
+                            }
+                            else
+                                corpAud = jShedule.getJSONObject(z).getString("subject2").split("-");
+                        }catch (ArrayIndexOutOfBoundsException e){
+                            System.out.println(e.getMessage());
+                        }
+
 
                         audsSchedule.clear();
                         if (jShedule.getJSONObject(z).isNull("subject2"))
-                            audsSchedule.add(new Auds("Неизвестно","Неизвестно"));
+                            audsSchedule = audsService.findByAud("Неизвестно","Неизвестно");
                         else
                             audsSchedule = audsService.findByAud(corpAud[0], jShedule.getJSONObject(z).getString("subject2")); // поиск аудитории
 
+                        if (audsSchedule.size() == 0)
+                            audsSchedule = audsService.findByAud("Неизвестно","Неизвестно");
+
                         teacherSchedule.clear();
                         if (jShedule.getJSONObject(z).isNull("subject3"))
-                            teacherSchedule.add(new Teachers("Неизвестно"));
+                            teacherSchedule = teachersService.findTeacherByName("Неизвестно");
                         else
                             teacherSchedule = teachersService.findTeacherByName(jShedule.getJSONObject(z).getString("subject3"));// поиск препода
 
@@ -317,19 +339,25 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
                         lesson.setTeacher(teacherSchedule.get(0));
                         lessonService.saveLesson(lesson);
                     }
+                    System.out.println("Сохранено для подгруппы: " + jGroups.getJSONObject(x).getString("title"));
                 }
                 System.out.println("Save for: " + jDirections.getJSONObject(j).getString("title"));
             }
         }
-        /*allLessons = lessonService.findAllLessons();
+    }
+    public void FillLessonBySubgroup(){
+        allLessons = lessonService.findAllLessons();
+        LessonBySubgroup lessonBySubgroup;
         for (Lesson l: allLessons) {// заполнение смежной таблицы (подгруппа - занятие)
-            groupSchedule = studentsService.findBySubgroup(l.getSubgroup());
-            LessonBySubgroup lessonBySubgroup = new LessonBySubgroup();
+            groupSchedule = studentsService.findByGroup(l.getGroupp());
+            lessonBySubgroup = new LessonBySubgroup();
             lessonBySubgroup.setStudent(groupSchedule.get(0));
             lessonBySubgroup.setLesson(l);
             lessonBySubgroupService.saveLesson(lessonBySubgroup);
-        }*/
+        }
+        System.out.println("Save all: LessonBySubgroup");
     }
+
     public ResponseData getSchedule(String facultet, String direction, String group) throws IOException {
         Map<String, String> params = new HashMap<String, String>();
         params.put("action", "getfaculties");

@@ -105,13 +105,8 @@ public class MainGraph {
 //        audsService.saveAud(auds);
 //
         /*TeachersService teachersService = new TeachersService();
-        List<Teachers> teachers = teachersService.findTeacherByName("Глазова Е.Ю.");
-        for (Teachers t: teachers) {
-            if (t.getName() != null)
-                System.out.println(t.getName());
-            else
-                System.out.println("Нет такого");
-        }*/
+        List<Teachers> teachers = teachersService.findTeacherByName("ВУЦ");
+        System.out.println(teachers.size());*/
 //        Teachers teachers = new Teachers("Папич");
 //        teachersService.saveTeacher(teachers);
 //
@@ -132,9 +127,10 @@ public class MainGraph {
 //        lessonBySubgroup.setStudent(students);
 //        lessonBySubgroupDAO.save(lessonBySubgroup);
         ProcessingHandler p = new ProcessingHandler();
+        //p.FillAuds();
         //p.FillTeachers();
-        p.FillLessons();
-
+        //p.FillLessons();
+        p.FillLessonBySubgroup();
     }
 
 }

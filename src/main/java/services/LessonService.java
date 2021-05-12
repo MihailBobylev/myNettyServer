@@ -24,6 +24,9 @@ public class LessonService {
     public void deleteLesson(Lesson lesson) {
         lessonDAO.delete(lesson);
     }
+    public void deleteAllLesson() {
+        lessonDAO.deleteAll();
+    }
 
     public void updateLesson(Lesson lesson) {
         lessonDAO.update(lesson);

@@ -26,6 +26,9 @@ public class AudsService {
     public void deleteAud(Auds aud) {
         audsDAO.delete(aud);
     }
+    public void deleteAllAuds() {
+        audsDAO.deleteAll();
+    }
 
     public void updateAud(Auds aud) {
         audsDAO.update(aud);

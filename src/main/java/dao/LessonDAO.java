@@ -46,7 +46,13 @@ public class LessonDAO {
         tx1.commit();
         session.close();
     }
-
+    public void deleteAll() {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+        session.createQuery("DELETE FROM Lesson").executeUpdate();
+        tx1.commit();
+        session.close();
+    }
     public List<Lesson> findAll() {
         List<Lesson> lessons = (List<Lesson>) HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("From Lesson").list();
         return lessons;
