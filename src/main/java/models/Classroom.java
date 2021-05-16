@@ -11,7 +11,7 @@ public class Classroom {
     Integer id;
 
     @Column(name = "number")
-    Integer number;
+    String number;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hallwayId")
@@ -26,7 +26,7 @@ public class Classroom {
     public Classroom() {
     }
 
-    public Classroom(Integer number, String side, String position) { //Integer hallwayId,
+    public Classroom(String number, String side, String position) { //Integer hallwayId,
         this.number = number;
         this.side = side;
         this.position = position;
@@ -36,11 +36,11 @@ public class Classroom {
         return id;
     }
 
-    public Integer getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(Integer number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 

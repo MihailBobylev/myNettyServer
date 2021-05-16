@@ -32,6 +32,10 @@ public class AreaService {
         return areaDAO.findAll();
     }
 
+    public List<Area> findByAreasName(String name) {
+        return areaDAO.findByAreasName(name);
+    }
+
     public Hallway findHallwayById(int id) {
         return areaDAO.findHallwayById(id);
     }

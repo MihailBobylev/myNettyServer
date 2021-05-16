@@ -114,7 +114,7 @@ public class MainGraph {
 //        Students students = new Students("inst","direct","17-is","a");
 //        studentsService.saveStudent(students);
 //
-        LessonService lessonService = new LessonService();
+        /*LessonService lessonService = new LessonService();
         TeachersService teachersService = new TeachersService();
         List<Teachers> teachers = teachersService.findTeacherByName("Денисов А.Р.");
         List<Lesson> lessons = lessonService.findByTeacherID(teachers.get(0));
@@ -181,7 +181,7 @@ public class MainGraph {
             System.out.println(l.getLessonByGroup());
             System.out.println(l.getLessontype());
             System.out.println("-------------------------");
-        }
+        }*/
 //        Lesson lesson = new Lesson("лекция", "0","Мультимедиа", "17-is","a","4","1");
 //        lesson.setTeacher(teachers);
 //        lesson.setAud(auds);
@@ -193,11 +193,15 @@ public class MainGraph {
 //        lessonBySubgroup.setLesson(lesson);
 //        lessonBySubgroup.setStudent(students);
 //        lessonBySubgroupDAO.save(lessonBySubgroup);
-        //ProcessingHandler p = new ProcessingHandler();
+        ProcessingHandler p = new ProcessingHandler();
         //p.FillAuds();
         //p.FillTeachers();
         //p.FillLessons();
         //p.FillLessonBySubgroup();
+        //p.FillFirstFloor();
+        //p.FillSecondFloor();
+        //p.FillThirdFloor();
+        //p.FillFourthFloor();
     }
 
 }

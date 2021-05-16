@@ -3,8 +3,10 @@ package dao;
 import config.HibernateSessionFactoryUtil;
 import models.Area;
 import models.Hallway;
+import models.Teachers;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 
@@ -12,7 +14,14 @@ public class AreaDAO {
     public Area findAreaById(int id) {
         return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Area.class, id);
     }
-
+    public List<Area> findByAreasName(String name) {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        List<Area> areas =
+                session.createCriteria(Area.class)
+                        .add(Restrictions.eq("name", name))
+                        .list();
+        return areas;
+    }
     public void save(Area area) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
