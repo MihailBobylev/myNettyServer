@@ -170,29 +170,6 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         for (int i = 0; i < jObj.length(); i++){
             teachersService.saveTeacher(new Teachers(jObj.getJSONObject(i).getString("title")));
         }
-
-        //--------------------------------
-
-        /*params = new HashMap<String, String>();
-        params.put("action", "gettimetable");
-        params.put("mode","teacher");
-        params.put("id", post_id);
-
-        teachersJSON = doPostQuery(getUrl(), params); // получаем всё расписание конкретного препода
-        jObj = new JSONArray(teachersJSON);
-        if (jObj.length() == 0)
-            return null;
-        else
-        {
-            // Записываем расписание для препода в БД
-            teachersService.saveTeacher(new Teachers(name));
-            //---------------------------------------------
-
-            ResponseData l = new ResponseData();
-            l.setTeacherName(name);
-            l.setSchedule(jObj.toString());
-            return l;
-        }*/
     }
     public void FillAuds() throws IOException{
         audsService.deleteAllAuds();
@@ -921,6 +898,121 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         hallwaySevice.updateHallway(hallway1);
         hallwaySevice.updateHallway(hallway2);
         hallwaySevice.updateHallway(hallway3);
+    }
+    public void FillFifthFloor(){
+        Area area1 = new Area("E",5,"A5");
+        Area area2 = new Area("E",5,"Л5");
+        Area area3 = new Area("E",5,"Б5");
+        areaService.saveArea(area1);
+        areaService.saveArea(area2);
+        areaService.saveArea(area3);
+
+        Hallway hallway1 = new Hallway("лево","право");
+        hallway1.setStartArea(area2);
+        hallway1.setEndArea(area1);
+        Hallway hallway2 = new Hallway("лево","право");
+        hallway2.setStartArea(area2);
+        hallway2.setEndArea(area3);
+        List<Area> area4 = areaService.findByAreasName("Л4");
+        Hallway hallway3 = new Hallway("лево","право");
+        hallway3.setStartArea(area4.get(0));
+        hallway3.setEndArea(area2);
+        hallwaySevice.saveHallway(hallway1);
+        hallwaySevice.saveHallway(hallway2);
+        hallwaySevice.saveHallway(hallway3);
+
+        Classroom classroom1 = new Classroom("515","лево","первый");
+        Classroom classroom2 = new Classroom("513","лево","второй");
+        Classroom classroom3 = new Classroom("512","лево","третий");
+        Classroom classroom4 = new Classroom("511","лево","четвертый");
+        Classroom classroom5 = new Classroom("509","лево","пятый");
+        Classroom classroom6 = new Classroom("504","лево","шестой");
+        Classroom classroom7 = new Classroom("501","лево","седьмой");
+        Classroom classroom8 = new Classroom("501б","лево","восьмой");
+        Classroom classroom9 = new Classroom("516а","право","первый");
+        Classroom classroom10 = new Classroom("514","право","второй");
+        Classroom classroom11 = new Classroom("510","право","третий");
+        Classroom classroom12 = new Classroom("508","право","четвертый");
+        Classroom classroom13 = new Classroom("507","право","пятый");
+        Classroom classroom14 = new Classroom("505","право","шестой");
+        Classroom classroom15 = new Classroom("503","право","седьмой");
+        Classroom classroom16 = new Classroom("502","право","восьмой");
+        Classroom classroom17 = new Classroom("501а","право","девятый");
+        classroom1.setHallway(hallway1);
+        classroom2.setHallway(hallway1);
+        classroom3.setHallway(hallway1);
+        classroom4.setHallway(hallway1);
+        classroom5.setHallway(hallway1);
+        classroom6.setHallway(hallway1);
+        classroom7.setHallway(hallway1);
+        classroom8.setHallway(hallway1);
+        classroom9.setHallway(hallway1);
+        classroom10.setHallway(hallway1);
+        classroom11.setHallway(hallway1);
+        classroom12.setHallway(hallway1);
+        classroom13.setHallway(hallway1);
+        classroom14.setHallway(hallway1);
+        classroom15.setHallway(hallway1);
+        classroom16.setHallway(hallway1);
+        classroom17.setHallway(hallway1);
+        hallway1.addClassroom(classroom1);
+        hallway1.addClassroom(classroom2);
+        hallway1.addClassroom(classroom3);
+        hallway1.addClassroom(classroom4);
+        hallway1.addClassroom(classroom5);
+        hallway1.addClassroom(classroom6);
+        hallway1.addClassroom(classroom7);
+        hallway1.addClassroom(classroom8);
+        hallway1.addClassroom(classroom9);
+        hallway1.addClassroom(classroom10);
+        hallway1.addClassroom(classroom11);
+        hallway1.addClassroom(classroom12);
+        hallway1.addClassroom(classroom13);
+        hallway1.addClassroom(classroom14);
+        hallway1.addClassroom(classroom15);
+        hallway1.addClassroom(classroom16);
+        hallway1.addClassroom(classroom17);
+
+        Classroom classroom18 = new Classroom("518","право","первый");
+        Classroom classroom19 = new Classroom("519","право","второй");
+        Classroom classroom20 = new Classroom("519а","право","третий");
+        Classroom classroom21 = new Classroom("521","право","четвертый");
+        Classroom classroom28 = new Classroom("523","право","пятый");
+        Classroom classroom29 = new Classroom("530","право","пятый");
+        Classroom classroom22 = new Classroom("516","лево","первый");
+        Classroom classroom23 = new Classroom("517","лево","второй");
+        Classroom classroom24 = new Classroom("520","лево","третий");
+        Classroom classroom25 = new Classroom("521б","лево","третий");
+        Classroom classroom26 = new Classroom("525","лево","четвертый");
+        Classroom classroom27 = new Classroom("522","лево","пятый");
+
+        classroom18.setHallway(hallway2);
+        classroom19.setHallway(hallway2);
+        classroom20.setHallway(hallway2);
+        classroom21.setHallway(hallway2);
+        classroom22.setHallway(hallway2);
+        classroom23.setHallway(hallway2);
+        classroom24.setHallway(hallway2);
+        classroom25.setHallway(hallway2);
+        classroom26.setHallway(hallway2);
+        classroom27.setHallway(hallway2);
+        classroom28.setHallway(hallway2);
+        classroom29.setHallway(hallway2);
+        hallway2.addClassroom(classroom18);
+        hallway2.addClassroom(classroom19);
+        hallway2.addClassroom(classroom20);
+        hallway2.addClassroom(classroom21);
+        hallway2.addClassroom(classroom22);
+        hallway2.addClassroom(classroom23);
+        hallway2.addClassroom(classroom24);
+        hallway2.addClassroom(classroom25);
+        hallway2.addClassroom(classroom26);
+        hallway2.addClassroom(classroom27);
+        hallway2.addClassroom(classroom28);
+        hallway2.addClassroom(classroom29);
+
+        hallwaySevice.updateHallway(hallway1);
+        hallwaySevice.updateHallway(hallway2);
     }
     public ResponseData getSchedule(String facultet, String direction, String group) throws IOException {
         Map<String, String> params = new HashMap<String, String>();

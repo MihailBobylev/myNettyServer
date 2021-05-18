@@ -198,10 +198,11 @@ public class MainGraph {
         //p.FillTeachers();
         //p.FillLessons();
         //p.FillLessonBySubgroup();
-        //p.FillFirstFloor();
-        //p.FillSecondFloor();
-        //p.FillThirdFloor();
-        //p.FillFourthFloor();
+        p.FillFirstFloor();
+        p.FillSecondFloor();
+        p.FillThirdFloor();
+        p.FillFourthFloor();
+        p.FillFifthFloor();
     }
 
 }
