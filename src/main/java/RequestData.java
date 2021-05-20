@@ -1,6 +1,7 @@
 public class RequestData {
     private String auditor;
-    private String name;
+    private String endAuditor;
+    private String teacherName;
     private String institute;
     private String direction;
     private String group;
@@ -8,6 +9,14 @@ public class RequestData {
     private String dayOfWeek;
     private String lessonNumber;
     private String week;
+
+    public String getEndAuditor() {
+        return endAuditor;
+    }
+
+    public void setEndAuditor(String endAuditor) {
+        this.endAuditor = endAuditor;
+    }
 
     public String getAuditor() {
         return auditor;
@@ -17,12 +26,12 @@ public class RequestData {
         this.auditor = auditor;
     }
 
-    public String getName() {
-        return name;
+    public String getTeacherName() {
+        return teacherName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
     }
 
     public String getInstitute() {

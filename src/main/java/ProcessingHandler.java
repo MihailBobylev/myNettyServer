@@ -53,7 +53,7 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
                 audsSchedule.clear();
                 break;
             case 1: // расписание препода
-                teacherSchedule =  teachersService.findTeacherByName(requestData.getName());
+                teacherSchedule =  teachersService.findTeacherByName(requestData.getTeacherName());
                 /*if (teacherSchedule.size() != 0){
                     responseData.setTeacherName(teacherSchedule.get(0).getName());
                 }else
@@ -76,7 +76,7 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         //responseData.setIntValue(requestData.getIntValue() * 2);
         ChannelFuture future = ctx.writeAndFlush(responseData); //responseData
         future.addListener(ChannelFutureListener.CLOSE);
-        System.out.println(requestData.getName());
+        System.out.println(requestData.getTeacherName());
     }
     public String getUrl(){
 
