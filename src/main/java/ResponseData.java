@@ -1,16 +1,13 @@
 public class ResponseData {
-    private String className ;
+    private String lessonName;
     private String groupName;
-    private String teacherName;
-    private String schedule;
-    private String number;
 
-    public String getClassName() {
-        return className;
+    public String getLessonName() {
+        return lessonName;
     }
 
-    public void setClassName(String className) {
-        this.className = className;
+    public void setLessonName(String lessonName) {
+        this.lessonName = lessonName;
     }
 
     public String getGroupName() {
@@ -21,6 +18,8 @@ public class ResponseData {
         this.groupName = groupName;
     }
 
+    private String teacherName;
+
     public String getTeacherName() {
         return teacherName;
     }
@@ -29,36 +28,70 @@ public class ResponseData {
         this.teacherName = teacherName;
     }
 
-    public String getSchedule() {
-        return schedule;
+    private String corps;
+    private String auditor;
+
+    public String getCorps() {
+        return corps;
     }
 
-    public void setSchedule(String schedule) {
-        this.schedule = schedule;
+    public void setCorps(String corps) {
+        this.corps = corps;
     }
 
-    public String getNumber() {
-        return number;
+    public String getAuditor() {
+        return auditor;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setAuditor(String auditor) {
+        this.auditor = auditor;
     }
 
-    /*public ResponseData(String className, String groupName, String teacherName) {
-        this.className = className;
-        this.groupName = groupName;
-        this.teacherName = teacherName;
-    }*/
+    private String lessonNumber;
+    private String lessonType;
 
-    /*private int intValue;
-
-    public int getIntValue() {
-        return intValue;
+    public String getLessonNumber() {
+        return lessonNumber;
     }
 
-    public void setIntValue(int intValue) {
-        this.intValue = intValue;
-    }*/
-// standard getters and setters
+    public void setLessonNumber(String lessonNumber) {
+        this.lessonNumber = lessonNumber;
+    }
+
+    public String getLessonType() {
+        return lessonType;
+    }
+
+    public void setLessonType(String lessonType) {
+        this.lessonType = lessonType;
+    }
+
+    private String ways;
+
+    public String getWays() {
+        return ways;
+    }
+
+    public void setWays(String ways) {
+        this.ways = ways;
+    }
+
+    String institute;
+    String direction;
+
+    public String getInstitute() {
+        return institute;
+    }
+
+    public void setInstitute(String institute) {
+        this.institute = institute;
+    }
+
+    public String getDirection() {
+        return direction;
+    }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
 }

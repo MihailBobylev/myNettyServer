@@ -120,6 +120,7 @@ public class MainGraph {
         List<Lesson> lessons = lessonService.findByTeacherID(teachers.get(0));
         System.out.println("Пары препода");
         for (Lesson l: lessons) {
+            System.out.println(l.getTeacher().getName());
             System.out.println(l.getAud().getNumber());
             System.out.println(l.getGroupp());
             System.out.println(l.getSubgroup());
@@ -129,8 +130,8 @@ public class MainGraph {
             System.out.println(l.getLessonByGroup());
             System.out.println(l.getLessontype());
             System.out.println("-------------------------");
-        }
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        }*/
+/*        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@");
         System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@");
         System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@");
           lessons.clear();

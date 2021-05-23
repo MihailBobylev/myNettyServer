@@ -1,7 +1,6 @@
 public class RequestData {
     private String auditor;
     private String endAuditor;
-    private String teacherName;
     private String institute;
     private String direction;
     private String group;
@@ -9,6 +8,16 @@ public class RequestData {
     private String dayOfWeek;
     private String lessonNumber;
     private String week;
+    private String flag;
+    private String teacherName;
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
+    }
 
     public String getEndAuditor() {
         return endAuditor;

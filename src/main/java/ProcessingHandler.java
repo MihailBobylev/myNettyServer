@@ -36,47 +36,147 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         RequestData requestData = (RequestData) msg;
-        String schedule = "";
         //ResultSet rs;
         //ResponseData responseData = new ResponseData();
         // Поиск данных в БД
-        // case по параметру (0, 1, 2, 3), опредлеляющему запрос пользователя
+        // case по параметру (0, 1, 2, 3, 4), опредлеляющему запрос пользователя
         ResponseData responseData = new ResponseData();
+
         int flag = 1;
         switch (flag){
             case 0: // расписание аудитории
-                audsSchedule =  audsService.findByAud(requestData.getCorp(), requestData.getAuditor());
+                audsSchedule = audsService.findByAud(requestData.getCorp(),requestData.getAuditor());
+                allLessons =  lessonService.findByAudID(audsSchedule.get(0), requestData.getWeek(),requestData.getDayOfWeek(),requestData.getLessonNumber());
                 if (audsSchedule.size() != 0){
-                    responseData.setNumber(audsSchedule.get(0).getNumber());
+                    responseData.setTeacherName(allLessons.get(0).getTeacher().getName());
+                    responseData.setLessonName(allLessons.get(0).getLessonByGroup());
+                    responseData.setLessonType(allLessons.get(0).getLessontype());
+                    responseData.setGroupName(allLessons.get(0).getSubgroup());
                 }else
-                    responseData = getCurrentClass(requestData.getGroup(), requestData.getAuditor(), requestData.getDayOfWeek(), requestData.getLessonNumber(), requestData.getWeek());
-                audsSchedule.clear();
+                {
+                    responseData.setTeacherName("Неизвестно");
+                    responseData.setLessonName("Неизвестно");
+                    responseData.setLessonType("Неизвестно");
+                    responseData.setGroupName("Неизвестно");
+                }
                 break;
             case 1: // расписание препода
+                //System.out.println(requestData.getTeacherName());
                 teacherSchedule =  teachersService.findTeacherByName(requestData.getTeacherName());
-                /*if (teacherSchedule.size() != 0){
-                    responseData.setTeacherName(teacherSchedule.get(0).getName());
-                }else
-                    responseData = getTeacher(requestData.getName());*/
-                teacherSchedule.clear();
+                allLessons =  lessonService.findByTeacherID(teacherSchedule.get(0));
+                String lessonNumber = "";
+                String corp = "";
+                String auditor = "";
+                String lessonName = "";
+                String lessonType = "";
+                String groupName = "";
+                Auds auds2;
+                if (allLessons.size() == 0){
+                    responseData.setLessonNumber("Неизвестно");
+                    responseData.setCorps("Неизвестно");
+                    responseData.setAuditor("Неизвестно");
+                    responseData.setLessonName("Неизвестно");
+                    responseData.setLessonType("Неизвестно");
+                    responseData.setGroupName("Неизвестно");
+                    break;
+                }
+                for (Lesson l: allLessons) {
+                    auds2 = audsService.findAuds(l.getAud().getId());
+                    lessonNumber += l.getNumberOfClass() + "@";
+                    corp += auds2.getCorp() + "@";
+                    auditor += auds2.getNumber() + "@";
+                    lessonName += l.getLessonByGroup() + "@";
+                    lessonType += l.getLessontype() + "@";
+                    groupName += l.getSubgroup() + "@";
+                }
+                responseData.setLessonNumber(lessonNumber);
+                responseData.setCorps(corp);
+                responseData.setAuditor(auditor);
+                responseData.setLessonName(lessonName);
+                responseData.setLessonType(lessonType);
+                responseData.setGroupName(groupName);
+
+                //Заполнение оставшихся полей
+                responseData.setTeacherName("Препод");
+                responseData.setWays("Путь");
+                responseData.setInstitute("Институт");
+                responseData.setDirection("Направление");
+
                 break;
             case 2: // расписание группы
-                groupSchedule =  studentsService.findByGroup(requestData.getGroup());
-                if (groupSchedule.size() != 0){
-                    responseData.setGroupName(groupSchedule.get(0).getGroupp());
-                    responseData.setSchedule(groupSchedule.get(0).getSubgroup());
-                }else
-                    responseData = getSchedule(requestData.getInstitute(), requestData.getDirection(), requestData.getGroup());
-                groupSchedule.clear();
+                allLessons = lessonService.findByGroup(requestData.getGroup());
+                String lessonNumber2 = "";
+                String corp2 = "";
+                String auditor2 = "";
+                String lessonName2 = "";
+                String lessonType2 = "";
+                String teacher2 = "";
+                if (allLessons.size() == 0){
+                    responseData.setLessonNumber("Неизвестно");
+                    responseData.setCorps("Неизвестно");
+                    responseData.setAuditor("Неизвестно");
+                    responseData.setLessonName("Неизвестно");
+                    responseData.setLessonType("Неизвестно");
+                    responseData.setTeacherName("Неизвестно");
+                    break;
+                }
+                for (Lesson l: allLessons) {
+                    Auds auds = audsService.findAuds(l.getId());
+                    lessonNumber2 += l.getNumberOfClass() + "@";
+                    corp2 += auds.getCorp() + "@";
+                    auditor2 += auds.getNumber() + "@";
+                    lessonName2 += l.getLessonByGroup() + "@";
+                    lessonType2 += l.getLessontype() + "@";
+                    teacher2 += l.getTeacher().getName() + "@";
+                }
+                responseData.setLessonNumber(lessonNumber2);
+                responseData.setCorps(corp2);
+                responseData.setAuditor(auditor2);
+                responseData.setLessonName(lessonName2);
+                responseData.setLessonType(lessonType2);
+                responseData.setTeacherName(teacher2);
+
+                //groupSchedule.clear();
                 break;
             case 3: // поиск пути
                 break;
-        }
+            case 4: // заполнение БД клиента
+                groupSchedule = studentsService.findAllStudents();// институт, направление, группа
+                String institute = "";
+                String direction = "";
+                String groupp = "";
+                for (Students s: groupSchedule) {
+                    institute += s.getInstitute() + "@";
+                    direction += s.getDirection() + "@";
+                    groupp += s.getGroupp() + "@";
+                }
+                responseData.setInstitute(institute);
+                responseData.setDirection(direction);
+                requestData.setGroup(groupp);
 
-        //responseData.setIntValue(requestData.getIntValue() * 2);
+                teacherSchedule = teachersService.findAllTeachers();// имя преподавателя
+                String teachName = "";
+                for (Teachers t: teacherSchedule) {
+                    teachName += t.getName() + "@";
+                }
+                responseData.setTeacherName(teachName);
+
+                audsSchedule = audsService.findAllAuds();// корпуса и аудитории
+                String corp3 = "";
+                String audName = "";
+                for (Auds a: audsSchedule) {
+                    corp3 += a.getCorp() + "@";
+                    audName += a.getNumber() + "@";
+                }
+                responseData.setCorps(corp3);
+                responseData.setAuditor(audName);
+                break;
+        }
+        System.out.println("Что-то вернул1");
         ChannelFuture future = ctx.writeAndFlush(responseData); //responseData
         future.addListener(ChannelFutureListener.CLOSE);
-        System.out.println(requestData.getTeacherName());
+        System.out.println("Что-то вернул2");
+        //System.out.println(requestData.getTeacherName());
     }
     public String getUrl(){
 
@@ -151,7 +251,7 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         else
         {
             ResponseData l = new ResponseData();
-            l.setClassName(className);
+            //l.setClassName(className);
             l.setGroupName(groupName);
             l.setTeacherName(teacherName);
             return l;
@@ -1082,7 +1182,7 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
             //---------------------------------------------
             ResponseData l = new ResponseData();
             l.setGroupName(group);
-            l.setSchedule(jObj.toString());
+            //l.setSchedule(jObj.toString());
             return l;
         }
     }

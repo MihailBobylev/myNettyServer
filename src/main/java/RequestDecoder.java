@@ -8,11 +8,14 @@ import java.util.List;
 public class RequestDecoder extends ReplayingDecoder<RequestData> {
 
     // получение данных от клиента
-    private final Charset charset = Charset.forName("UTF-8");
+    private final Charset charset = Charset.forName("Cp866");
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
         RequestData data = new RequestData();
+
+        int flagLen = in.readInt();
+        data.setFlag(in.readCharSequence(flagLen, charset).toString());// получаем флаг
 
         int audLen = in.readInt();
         data.setAuditor(in.readCharSequence(audLen, charset).toString());// получаем аудиторию
@@ -37,6 +40,13 @@ public class RequestDecoder extends ReplayingDecoder<RequestData> {
 
         int groupLen = in.readInt();
         data.setGroup(in.readCharSequence(groupLen, charset).toString());// получаем группу
+
+        int teachLen = in.readInt();
+        data.setTeacherName(in.readCharSequence(teachLen, charset).toString());// получаем препода
+
+        int audLen2 = in.readInt();
+        data.setEndAuditor(in.readCharSequence(audLen2, charset).toString());// получаем конечную аудиторию
+
         out.add(data);
     }
 }
