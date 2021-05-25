@@ -437,6 +437,7 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         }
         System.out.println("Save all: LessonBySubgroup");
     }
+
     public void FillFirstFloor(){
         // Первый этаж
         Area area1 = new Area("E",1,"A1");
@@ -452,19 +453,19 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         areaService.saveArea(area5);
         areaService.saveArea(area6);
 
-        Hallway hallway1 = new Hallway("лево","право");
+        Hallway hallway1 = new Hallway("На развилке повернуть направо","Встать спиной к тупику, пойти прямо, на развилке повернуть налево");
         hallway1.setStartArea(area2);
         hallway1.setEndArea(area1);
-        Hallway hallway2 = new Hallway("лево","право");
+        Hallway hallway2 = new Hallway("На развилке повернуть налево","Встать спиной к тупику, пойти прямо, на развилке повернуть направо");
         hallway2.setStartArea(area2);
         hallway2.setEndArea(area3);
-        Hallway hallway3 = new Hallway("лево","право");
+        Hallway hallway3 = new Hallway("Повернуть налево от главного входа и идти прямо","Идти по направлению к главному входу");
         hallway3.setStartArea(area4);
         hallway3.setEndArea(area2);
-        Hallway hallway4 = new Hallway("лево","право");
+        Hallway hallway4 = new Hallway("Повернуть направо от главного входа и идти прямо","Идти по направлению к главному входу");
         hallway4.setStartArea(area4);
         hallway4.setEndArea(area5);
-        Hallway hallway5 = new Hallway("лево","право");
+        Hallway hallway5 = new Hallway("В конце повернуть направо","Встать спиной к тупику, пойти прямо, в конце повернуть налево");
         hallway5.setStartArea(area5);
         hallway5.setEndArea(area6);
         hallwaySevice.saveHallway(hallway1);
@@ -473,12 +474,12 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         hallwaySevice.saveHallway(hallway4);
         hallwaySevice.saveHallway(hallway5);
 
-        Classroom classroom1 = new Classroom("101","лево","второй");
-        Classroom classroom2 = new Classroom("102","право","четвертый");
-        Classroom classroom3 = new Classroom("103","право","третий");
-        Classroom classroom4 = new Classroom("104","лево","первый");
-        Classroom classroom5 = new Classroom("105","право","второй");
-        Classroom classroom6 = new Classroom("105а","право","первый");
+        Classroom classroom1 = new Classroom("101","По левой стороне","второй кабинет");
+        Classroom classroom2 = new Classroom("102","По правой стороне","четвертый кабинет");
+        Classroom classroom3 = new Classroom("103","По правой стороне","третий кабинет");
+        Classroom classroom4 = new Classroom("104","По левой стороне","первый кабинет");
+        Classroom classroom5 = new Classroom("105","По правой стороне","второй кабинет");
+        Classroom classroom6 = new Classroom("105а","По правой стороне","первый кабинет");
         classroom1.setHallway(hallway2);
         classroom2.setHallway(hallway2);
         classroom3.setHallway(hallway2);
@@ -492,10 +493,10 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         hallway2.addClassroom(classroom5);
         hallway2.addClassroom(classroom6);
 
-        Classroom classroom7 = new Classroom("106","лево","первый");
-        Classroom classroom8 = new Classroom("107","лево","второй");
-        Classroom classroom9 = new Classroom("108","лево","третий");
-        Classroom classroom10 = new Classroom("109","лево","четвертый");
+        Classroom classroom7 = new Classroom("106","По левой стороне","первый кабинет");
+        Classroom classroom8 = new Classroom("107","По левой стороне","второй кабинет");
+        Classroom classroom9 = new Classroom("108","По левой стороне","третий кабинет");
+        Classroom classroom10 = new Classroom("109","По левой стороне","четвертый кабинет");
         classroom7.setHallway(hallway1);
         classroom8.setHallway(hallway1);
         classroom9.setHallway(hallway1);
@@ -505,19 +506,19 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         hallway1.addClassroom(classroom9);
         hallway1.addClassroom(classroom10);
 
-        Classroom classroom11 = new Classroom("100","право","первый");
-        Classroom classroom12 = new Classroom("99","право","второй");
-        Classroom classroom13 = new Classroom("115","право","третий");
-        Classroom classroom14 = new Classroom("113","право","четвертый");
-        Classroom classroom15 = new Classroom("113а","право","четвертый");
-        Classroom classroom16 = new Classroom("111","право","пятый");
-        Classroom classroom17 = new Classroom("110","право","шестой");
-        Classroom classroom18 = new Classroom("97","право","седьмой");
-        Classroom classroom19 = new Classroom("118","лево","первый");
-        Classroom classroom20 = new Classroom("117","лево","второй");
-        Classroom classroom21 = new Classroom("116","лево","третий");
-        Classroom classroom22 = new Classroom("114","лево","четвертый");
-        Classroom classroom23 = new Classroom("112","лево","пятый");
+        Classroom classroom11 = new Classroom("100","По правой стороне","первый кабинет");
+        Classroom classroom12 = new Classroom("99","По правой стороне","второй кабинет");
+        Classroom classroom13 = new Classroom("115","По правой стороне","третий кабинет");
+        Classroom classroom14 = new Classroom("113","По правой стороне","четвертый кабинет");
+        Classroom classroom15 = new Classroom("113а","По правой стороне","четвертый кабинет");
+        Classroom classroom16 = new Classroom("111","По правой стороне","пятый кабинет");
+        Classroom classroom17 = new Classroom("110","По правой стороне","шестой кабинет");
+        Classroom classroom18 = new Classroom("97","По правой стороне","седьмой кабинет");
+        Classroom classroom19 = new Classroom("118","По левой стороне","первый кабинет");
+        Classroom classroom20 = new Classroom("117","По левой стороне","второй кабинет");
+        Classroom classroom21 = new Classroom("116","По левой стороне","третий кабинет");
+        Classroom classroom22 = new Classroom("114","По левой стороне","четвертый кабинет");
+        Classroom classroom23 = new Classroom("112","По левой стороне","пятый кабинет");
         classroom11.setHallway(hallway3);
         classroom12.setHallway(hallway3);
         classroom13.setHallway(hallway3);
@@ -545,11 +546,11 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         hallway3.addClassroom(classroom22);
         hallway3.addClassroom(classroom23);
 
-        Classroom classroom24 = new Classroom("119","право","первый");
-        Classroom classroom25 = new Classroom("121","право","второй");
-        Classroom classroom26 = new Classroom("120","лево","первый");
-        Classroom classroom27 = new Classroom("123","лево","второй");
-        Classroom classroom28 = new Classroom("124","лево","третий");
+        Classroom classroom24 = new Classroom("119","По правой стороне","первый кабинет");
+        Classroom classroom25 = new Classroom("121","По правой стороне","второй кабинет");
+        Classroom classroom26 = new Classroom("120","По левой стороне","первый кабинет");
+        Classroom classroom27 = new Classroom("123","По левой стороне","второй кабинет");
+        Classroom classroom28 = new Classroom("124","По левой стороне","третий кабинет");
         classroom24.setHallway(hallway4);
         classroom25.setHallway(hallway4);
         classroom26.setHallway(hallway4);
@@ -561,12 +562,12 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         hallway4.addClassroom(classroom27);
         hallway4.addClassroom(classroom28);
 
-        Classroom classroom29 = new Classroom("124а","лево","первый");
-        Classroom classroom30 = new Classroom("124б","лево","второй");
-        Classroom classroom31 = new Classroom("125","лево","третий");
-        Classroom classroom32 = new Classroom("128","лево","четвертый");
-        Classroom classroom33 = new Classroom("126","право","первый");
-        Classroom classroom34 = new Classroom("127","право","второй");
+        Classroom classroom29 = new Classroom("124а","По левой стороне","первый кабинет");
+        Classroom classroom30 = new Classroom("124б","По левой стороне","второй кабинет");
+        Classroom classroom31 = new Classroom("125","По левой стороне","третий кабинет");
+        Classroom classroom32 = new Classroom("128","По левой стороне","четвертый кабинет");
+        Classroom classroom33 = new Classroom("126","По правой стороне","первый кабинет");
+        Classroom classroom34 = new Classroom("127","По правой стороне","второй кабинет");
         classroom29.setHallway(hallway5);
         classroom30.setHallway(hallway5);
         classroom31.setHallway(hallway5);
@@ -598,20 +599,20 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         areaService.saveArea(area4);
         areaService.saveArea(area5);
 
-        Hallway hallway1 = new Hallway("лево","право");
+        Hallway hallway1 = new Hallway("Повернуть направо и идти прямо","Встать спиной к тупику, пойти прямо и в конце повернуть налево");
         hallway1.setStartArea(area2);
         hallway1.setEndArea(area1);
-        Hallway hallway2 = new Hallway("лево","право");
+        Hallway hallway2 = new Hallway("От лесницы повернуть налево и идти прямо","Идти по направлению к леснице");
         hallway2.setStartArea(area3);
         hallway2.setEndArea(area2);
-        Hallway hallway3 = new Hallway("лево","право");
+        Hallway hallway3 = new Hallway("От лесницы повернуть направо и идти прямо","Идти по направлению к леснице");
         hallway3.setStartArea(area3);
         hallway3.setEndArea(area4);
-        Hallway hallway4 = new Hallway("лево","право");
+        Hallway hallway4 = new Hallway("Повернуть направо и идти прямо","Встать спиной к тупику, пойти прямо и в конце повернуть налево");
         hallway4.setStartArea(area4);
         hallway4.setEndArea(area5);
         List<Area> area6 = areaService.findByAreasName("Л1");
-        Hallway hallway5 = new Hallway("лево","право");
+        Hallway hallway5 = new Hallway("Подняться на второй этаж","Спуститься на первый этаж");
         hallway5.setStartArea(area6.get(0));
         hallway5.setEndArea(area3);
         hallwaySevice.saveHallway(hallway1);
@@ -620,10 +621,10 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         hallwaySevice.saveHallway(hallway4);
         hallwaySevice.saveHallway(hallway5);
 
-        Classroom classroom1 = new Classroom("205","лево","четвертый");
-        Classroom classroom2 = new Classroom("204","лево","третий");
-        Classroom classroom3 = new Classroom("203","лево","второй");
-        Classroom classroom4 = new Classroom("202","лево","первый");
+        Classroom classroom1 = new Classroom("205","По левой стороне","четвертый кабинет");
+        Classroom classroom2 = new Classroom("204","По левой стороне","третий кабинет");
+        Classroom classroom3 = new Classroom("203","По левой стороне","второй кабинет");
+        Classroom classroom4 = new Classroom("202","По левой стороне","первый кабинет");
         classroom1.setHallway(hallway1);
         classroom2.setHallway(hallway1);
         classroom3.setHallway(hallway1);
@@ -633,21 +634,21 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         hallway1.addClassroom(classroom3);
         hallway1.addClassroom(classroom4);
 
-        Classroom classroom5 = new Classroom("217","лево","первый");
-        Classroom classroom6 = new Classroom("215","лево","второй");
-        Classroom classroom7 = new Classroom("213","лево","третий");
-        Classroom classroom8 = new Classroom("211","лево","четвертый");
-        Classroom classroom9 = new Classroom("210","лево","пятый");
-        Classroom classroom10 = new Classroom("208","лево","шестой");
-        Classroom classroom11 = new Classroom("200","лево","седьмой");
-        Classroom classroom12 = new Classroom("201","лево","восьмой");
-        Classroom classroom13 = new Classroom("218","право","первый");
-        Classroom classroom14 = new Classroom("216","право","второй");
-        Classroom classroom15 = new Classroom("214","право","третий");
-        Classroom classroom16 = new Classroom("212","право","четвертый");
-        Classroom classroom17 = new Classroom("209","право","пятый");
-        Classroom classroom18 = new Classroom("207","право","шестой");
-        Classroom classroom19 = new Classroom("206","право","седьмой");
+        Classroom classroom5 = new Classroom("217","По левой стороне","первый кабинет");
+        Classroom classroom6 = new Classroom("215","По левой стороне","второй кабинет");
+        Classroom classroom7 = new Classroom("213","По левой стороне","третий кабинет");
+        Classroom classroom8 = new Classroom("211","По левой стороне","четвертый кабинет");
+        Classroom classroom9 = new Classroom("210","По левой стороне","пятый кабинет");
+        Classroom classroom10 = new Classroom("208","По левой стороне","шестой кабинет");
+        Classroom classroom11 = new Classroom("200","По левой стороне","седьмой кабинет");
+        Classroom classroom12 = new Classroom("201","По левой стороне","восьмой кабинет");
+        Classroom classroom13 = new Classroom("218","По правой стороне","первый кабинет");
+        Classroom classroom14 = new Classroom("216","По правой стороне","второй кабинет");
+        Classroom classroom15 = new Classroom("214","По правой стороне","третий кабинет");
+        Classroom classroom16 = new Classroom("212","По правой стороне","четвертый кабинет");
+        Classroom classroom17 = new Classroom("209","По правой стороне","пятый кабинет");
+        Classroom classroom18 = new Classroom("207","По правой стороне","шестой кабинет");
+        Classroom classroom19 = new Classroom("206","По правой стороне","седьмой кабинет");
         classroom5.setHallway(hallway2);
         classroom6.setHallway(hallway2);
         classroom7.setHallway(hallway2);
@@ -679,15 +680,15 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         hallway2.addClassroom(classroom18);
         hallway2.addClassroom(classroom19);
 
-        Classroom classroom20 = new Classroom("220","право","первый");
-        Classroom classroom21 = new Classroom("222","право","второй");
-        Classroom classroom22 = new Classroom("224","право","третий");
-        Classroom classroom23 = new Classroom("219","лево","первый");
-        Classroom classroom24 = new Classroom("221","лево","второй");
-        Classroom classroom25 = new Classroom("223","лево","третий");
-        Classroom classroom26 = new Classroom("225","лево","четвертый");
-        Classroom classroom27 = new Classroom("226","лево","пятый");
-        Classroom classroom28 = new Classroom("226а","лево","шестой");
+        Classroom classroom20 = new Classroom("220","По правой стороне","первый кабинет");
+        Classroom classroom21 = new Classroom("222","По правой стороне","второй кабинет");
+        Classroom classroom22 = new Classroom("224","По правой стороне","третий кабинет");
+        Classroom classroom23 = new Classroom("219","По левой стороне","первый кабинет");
+        Classroom classroom24 = new Classroom("221","По левой стороне","второй кабинет");
+        Classroom classroom25 = new Classroom("223","По левой стороне","третий кабинет");
+        Classroom classroom26 = new Classroom("225","По левой стороне","четвертый кабинет");
+        Classroom classroom27 = new Classroom("226","По левой стороне","пятый кабинет");
+        Classroom classroom28 = new Classroom("226а","По левой стороне","шестой кабинет");
         classroom20.setHallway(hallway3);
         classroom21.setHallway(hallway3);
         classroom22.setHallway(hallway3);
@@ -707,10 +708,10 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         hallway3.addClassroom(classroom27);
         hallway3.addClassroom(classroom28);
 
-        Classroom classroom29 = new Classroom("227","лево","первый");
-        Classroom classroom30 = new Classroom("229","лево","второй");
-        Classroom classroom31 = new Classroom("228","право","первый");
-        Classroom classroom32 = new Classroom("230","право","второй");
+        Classroom classroom29 = new Classroom("227","По левой стороне","первый кабинет");
+        Classroom classroom30 = new Classroom("229","По левой стороне","второй кабинет");
+        Classroom classroom31 = new Classroom("228","По правой стороне","первый кабинет");
+        Classroom classroom32 = new Classroom("230","По правой стороне","второй кабинет");
 
         classroom29.setHallway(hallway4);
         classroom30.setHallway(hallway4);
@@ -737,20 +738,20 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         areaService.saveArea(area4);
         areaService.saveArea(area5);
 
-        Hallway hallway1 = new Hallway("лево","право");
+        Hallway hallway1 = new Hallway("Повернуть направо и идти прямо","Встать спиной к тупику, пойти прямо и в конце повернуть налево");
         hallway1.setStartArea(area2);
         hallway1.setEndArea(area1);
-        Hallway hallway2 = new Hallway("лево","право");
+        Hallway hallway2 = new Hallway("От лесницы повернуть налево и идти прямо","Идти по направлению к леснице");
         hallway2.setStartArea(area3);
         hallway2.setEndArea(area2);
-        Hallway hallway3 = new Hallway("лево","право");
+        Hallway hallway3 = new Hallway("От лесницы повернуть направо и идти прямо","Идти по направлению к леснице");
         hallway3.setStartArea(area3);
         hallway3.setEndArea(area4);
-        Hallway hallway4 = new Hallway("лево","право");
+        Hallway hallway4 = new Hallway("Повернуть направо и идти прямо","Встать спиной к тупику, пойти прямо и в конце повернуть налево");
         hallway4.setStartArea(area4);
         hallway4.setEndArea(area5);
         List<Area> area6 = areaService.findByAreasName("Л2");
-        Hallway hallway5 = new Hallway("лево","право");
+        Hallway hallway5 = new Hallway("Подняться на третий этаж","Спуститься на второй этаж");
         hallway5.setStartArea(area6.get(0));
         hallway5.setEndArea(area3);
         hallwaySevice.saveHallway(hallway1);
@@ -759,9 +760,9 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         hallwaySevice.saveHallway(hallway4);
         hallwaySevice.saveHallway(hallway5);
 
-        Classroom classroom1 = new Classroom("303а","лево","первый");
-        Classroom classroom2 = new Classroom("303б","лево","второй");
-        Classroom classroom3 = new Classroom("303","лево","третий");
+        Classroom classroom1 = new Classroom("303а","По левой стороне","первый кабинет");
+        Classroom classroom2 = new Classroom("303б","По левой стороне","второй кабинет");
+        Classroom classroom3 = new Classroom("303","По левой стороне","третий кабинет");
         classroom1.setHallway(hallway1);
         classroom2.setHallway(hallway1);
         classroom3.setHallway(hallway1);
@@ -769,21 +770,21 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         hallway1.addClassroom(classroom2);
         hallway1.addClassroom(classroom3);
 
-        Classroom classroom4 = new Classroom("313","лево","первый");
-        Classroom classroom5 = new Classroom("310","лево","второй");
-        Classroom classroom6 = new Classroom("308","лево","третий");
-        Classroom classroom7 = new Classroom("307","лево","четвертый");
-        Classroom classroom8 = new Classroom("305","лево","пятый");
-        Classroom classroom9 = new Classroom("301","лево","шестой");
-        Classroom classroom10 = new Classroom("317","право","первый");
-        Classroom classroom11 = new Classroom("316","право","второй");
-        Classroom classroom12 = new Classroom("315","право","третий");
-        Classroom classroom13 = new Classroom("314","право","четвертый");
-        Classroom classroom14 = new Classroom("312","право","пятый");
-        Classroom classroom15 = new Classroom("311","право","шестой");
-        Classroom classroom16 = new Classroom("309","право","седьмой");
-        Classroom classroom17 = new Classroom("306","право","восьмой");
-        Classroom classroom18 = new Classroom("304","право","девятый");
+        Classroom classroom4 = new Classroom("313","По левой стороне","первый кабинет");
+        Classroom classroom5 = new Classroom("310","По левой стороне","второй кабинет");
+        Classroom classroom6 = new Classroom("308","По левой стороне","третий кабинет");
+        Classroom classroom7 = new Classroom("307","По левой стороне","четвертый кабинет");
+        Classroom classroom8 = new Classroom("305","По левой стороне","пятый кабинет");
+        Classroom classroom9 = new Classroom("301","По левой стороне","шестой кабинет");
+        Classroom classroom10 = new Classroom("317","По правой стороне","первый кабинет");
+        Classroom classroom11 = new Classroom("316","По правой стороне","второй кабинет");
+        Classroom classroom12 = new Classroom("315","По правой стороне","третий кабинет");
+        Classroom classroom13 = new Classroom("314","По правой стороне","четвертый кабинет");
+        Classroom classroom14 = new Classroom("312","По правой стороне","пятый кабинет");
+        Classroom classroom15 = new Classroom("311","По правой стороне","шестой кабинет");
+        Classroom classroom16 = new Classroom("309","По правой стороне","седьмой кабинет");
+        Classroom classroom17 = new Classroom("306","По правой стороне","восьмой кабинет");
+        Classroom classroom18 = new Classroom("304","По правой стороне","девятый кабинет");
         classroom4.setHallway(hallway2);
         classroom5.setHallway(hallway2);
         classroom6.setHallway(hallway2);
@@ -815,15 +816,15 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         hallway2.addClassroom(classroom17);
         hallway2.addClassroom(classroom18);
 
-        Classroom classroom19 = new Classroom("319","право","первый");
-        Classroom classroom20 = new Classroom("321","право","второй");
-        Classroom classroom21 = new Classroom("323","право","третий");
-        Classroom classroom22 = new Classroom("318","лево","первый");
-        Classroom classroom23 = new Classroom("320","лево","второй");
-        Classroom classroom24 = new Classroom("322","лево","третий");
-        Classroom classroom25 = new Classroom("324","лево","четвертый");
-        Classroom classroom26 = new Classroom("325","лево","пятый");
-        Classroom classroom27 = new Classroom("326","лево","шестой");
+        Classroom classroom19 = new Classroom("319","По правой стороне","первый кабинет");
+        Classroom classroom20 = new Classroom("321","По правой стороне","второй кабинет");
+        Classroom classroom21 = new Classroom("323","По правой стороне","третий кабинет");
+        Classroom classroom22 = new Classroom("318","По левой стороне","первый кабинет");
+        Classroom classroom23 = new Classroom("320","По левой стороне","второй кабинет");
+        Classroom classroom24 = new Classroom("322","По левой стороне","третий кабинет");
+        Classroom classroom25 = new Classroom("324","По левой стороне","четвертый кабинет");
+        Classroom classroom26 = new Classroom("325","По левой стороне","пятый кабинет");
+        Classroom classroom27 = new Classroom("326","По левой стороне","шестой кабинет");
         classroom19.setHallway(hallway3);
         classroom20.setHallway(hallway3);
         classroom21.setHallway(hallway3);
@@ -843,13 +844,13 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         hallway3.addClassroom(classroom26);
         hallway3.addClassroom(classroom27);
 
-        Classroom classroom28 = new Classroom("326а","лево","первый");
-        Classroom classroom29 = new Classroom("328","лево","второй");
-        Classroom classroom30 = new Classroom("330","лево","третий");
-        Classroom classroom31 = new Classroom("332","лево","четвертый");
-        Classroom classroom32 = new Classroom("327","право","первый");
-        Classroom classroom33 = new Classroom("329","право","второй");
-        Classroom classroom34 = new Classroom("331","право","третий");
+        Classroom classroom28 = new Classroom("326а","По левой стороне","первый кабинет");
+        Classroom classroom29 = new Classroom("328","По левой стороне","второй кабинет");
+        Classroom classroom30 = new Classroom("330","По левой стороне","третий кабинет");
+        Classroom classroom31 = new Classroom("332","По левой стороне","четвертый кабинет");
+        Classroom classroom32 = new Classroom("327","По правой стороне","первый кабинет");
+        Classroom classroom33 = new Classroom("329","По правой стороне","второй кабинет");
+        Classroom classroom34 = new Classroom("331","По правой стороне","третий кабинет");
         classroom28.setHallway(hallway4);
         classroom29.setHallway(hallway4);
         classroom30.setHallway(hallway4);
@@ -879,17 +880,17 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         areaService.saveArea(area3);
         areaService.saveArea(area4);
 
-        Hallway hallway1 = new Hallway("лево","право");
+        Hallway hallway1 = new Hallway("От лесницы повернуть налево и идти прямо","Идти по направлению к леснице");
         hallway1.setStartArea(area2);
         hallway1.setEndArea(area1);
-        Hallway hallway2 = new Hallway("лево","право");
+        Hallway hallway2 = new Hallway("От лесницы повернуть направо и идти прямо","Идти по направлению к леснице");
         hallway2.setStartArea(area2);
         hallway2.setEndArea(area3);
-        Hallway hallway3 = new Hallway("лево","право");
+        Hallway hallway3 = new Hallway("Повернуть направо и идти прямо","Встать спиной к тупику, пойти прямо и в конце повернуть налево");
         hallway3.setStartArea(area3);
         hallway3.setEndArea(area4);
         List<Area> area5 = areaService.findByAreasName("Л3");
-        Hallway hallway4 = new Hallway("лево","право");
+        Hallway hallway4 = new Hallway("Подняться на четвертый этаж","Спуститься на третий этаж");
         hallway4.setStartArea(area5.get(0));
         hallway4.setEndArea(area2);
         hallwaySevice.saveHallway(hallway1);
@@ -897,23 +898,23 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         hallwaySevice.saveHallway(hallway3);
         hallwaySevice.saveHallway(hallway4);
 
-        Classroom classroom1 = new Classroom("412","лево","первый");
-        Classroom classroom2 = new Classroom("410","лево","второй");
-        Classroom classroom3 = new Classroom("408","лево","третий");
-        Classroom classroom4 = new Classroom("406","лево","четвертый");
-        Classroom classroom5 = new Classroom("404","лево","пятый");
-        Classroom classroom6 = new Classroom("401а","лево","шестой");
-        Classroom classroom7 = new Classroom("401","лево","седьмой");
-        Classroom classroom8 = new Classroom("416","право","первый");
-        Classroom classroom9 = new Classroom("415","право","второй");
-        Classroom classroom10 = new Classroom("414","право","третий");
-        Classroom classroom11 = new Classroom("413","право","четвертый");
-        Classroom classroom12 = new Classroom("411","право","пятый");
-        Classroom classroom13 = new Classroom("409","право","шестой");
-        Classroom classroom14 = new Classroom("407","право","седьмой");
-        Classroom classroom15 = new Classroom("405","право","восьмой");
-        Classroom classroom16 = new Classroom("403","право","девятый");
-        Classroom classroom17 = new Classroom("402","право","десятый");
+        Classroom classroom1 = new Classroom("412","По левой стороне","первый кабинет");
+        Classroom classroom2 = new Classroom("410","По левой стороне","второй кабинет");
+        Classroom classroom3 = new Classroom("408","По левой стороне","третий кабинет");
+        Classroom classroom4 = new Classroom("406","По левой стороне","четвертый кабинет");
+        Classroom classroom5 = new Classroom("404","По левой стороне","пятый кабинет");
+        Classroom classroom6 = new Classroom("401а","По левой стороне","шестой кабинет");
+        Classroom classroom7 = new Classroom("401","По левой стороне","седьмой кабинет");
+        Classroom classroom8 = new Classroom("416","По правой стороне","первый кабинет");
+        Classroom classroom9 = new Classroom("415","По правой стороне","второй кабинет");
+        Classroom classroom10 = new Classroom("414","По правой стороне","третий кабинет");
+        Classroom classroom11 = new Classroom("413","По правой стороне","четвертый кабинет");
+        Classroom classroom12 = new Classroom("411","По правой стороне","пятый кабинет");
+        Classroom classroom13 = new Classroom("409","По правой стороне","шестой кабинет");
+        Classroom classroom14 = new Classroom("407","По правой стороне","седьмой кабинет");
+        Classroom classroom15 = new Classroom("405","По правой стороне","восьмой кабинет");
+        Classroom classroom16 = new Classroom("403","По правой стороне","девятый кабинет");
+        Classroom classroom17 = new Classroom("402","По правой стороне","десятый кабинет");
         classroom1.setHallway(hallway1);
         classroom2.setHallway(hallway1);
         classroom3.setHallway(hallway1);
@@ -949,16 +950,16 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         hallway1.addClassroom(classroom16);
         hallway1.addClassroom(classroom17);
 
-        Classroom classroom18 = new Classroom("418","право","первый");
-        Classroom classroom19 = new Classroom("419","право","второй");
-        Classroom classroom20 = new Classroom("420","право","третий");
-        Classroom classroom21 = new Classroom("423","право","четвертый");
-        Classroom classroom22 = new Classroom("424","право","пятый");
-        Classroom classroom23 = new Classroom("417","лево","первый");
-        Classroom classroom24 = new Classroom("421","лево","второй");
-        Classroom classroom25 = new Classroom("422а","лево","третий");
-        Classroom classroom26 = new Classroom("422","лево","четвертый");
-        Classroom classroom27 = new Classroom("425","лево","пятый");
+        Classroom classroom18 = new Classroom("418","По правой стороне","первый кабинет");
+        Classroom classroom19 = new Classroom("419","По правой стороне","второй кабинет");
+        Classroom classroom20 = new Classroom("420","По правой стороне","третий кабинет");
+        Classroom classroom21 = new Classroom("423","По правой стороне","четвертый кабинет");
+        Classroom classroom22 = new Classroom("424","По правой стороне","пятый кабинет");
+        Classroom classroom23 = new Classroom("417","По левой стороне","первый кабинет");
+        Classroom classroom24 = new Classroom("421","По левой стороне","второй кабинет");
+        Classroom classroom25 = new Classroom("422а","По левой стороне","третий кабинет");
+        Classroom classroom26 = new Classroom("422","По левой стороне","четвертый кабинет");
+        Classroom classroom27 = new Classroom("425","По левой стороне","пятый кабинет");
         classroom18.setHallway(hallway2);
         classroom19.setHallway(hallway2);
         classroom20.setHallway(hallway2);
@@ -980,11 +981,11 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         hallway2.addClassroom(classroom26);
         hallway2.addClassroom(classroom27);
 
-        Classroom classroom28 = new Classroom("427","лево","первый");
-        Classroom classroom29 = new Classroom("429","лево","второй");
-        Classroom classroom30 = new Classroom("430","лево","третий");
-        Classroom classroom31 = new Classroom("426","право","первый");
-        Classroom classroom32 = new Classroom("428","право","второй");
+        Classroom classroom28 = new Classroom("427","По левой стороне","первый кабинет");
+        Classroom classroom29 = new Classroom("429","По левой стороне","второй кабинет");
+        Classroom classroom30 = new Classroom("430","По левой стороне","третий кабинет");
+        Classroom classroom31 = new Classroom("426","По правой стороне","первый кабинет");
+        Classroom classroom32 = new Classroom("428","По правой стороне","второй кабинет");
         classroom28.setHallway(hallway3);
         classroom29.setHallway(hallway3);
         classroom30.setHallway(hallway3);
@@ -1007,37 +1008,37 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         areaService.saveArea(area2);
         areaService.saveArea(area3);
 
-        Hallway hallway1 = new Hallway("лево","право");
+        Hallway hallway1 = new Hallway("От лесницы повернуть налево и идти прямо","Идти по направлению к леснице");
         hallway1.setStartArea(area2);
         hallway1.setEndArea(area1);
-        Hallway hallway2 = new Hallway("лево","право");
+        Hallway hallway2 = new Hallway("От лесницы повернуть направо и идти прямо","Идти по направлению к леснице");
         hallway2.setStartArea(area2);
         hallway2.setEndArea(area3);
         List<Area> area4 = areaService.findByAreasName("Л4");
-        Hallway hallway3 = new Hallway("лево","право");
+        Hallway hallway3 = new Hallway("Подняться на пятый этаж","Спуститься на четвертый этаж");
         hallway3.setStartArea(area4.get(0));
         hallway3.setEndArea(area2);
         hallwaySevice.saveHallway(hallway1);
         hallwaySevice.saveHallway(hallway2);
         hallwaySevice.saveHallway(hallway3);
 
-        Classroom classroom1 = new Classroom("515","лево","первый");
-        Classroom classroom2 = new Classroom("513","лево","второй");
-        Classroom classroom3 = new Classroom("512","лево","третий");
-        Classroom classroom4 = new Classroom("511","лево","четвертый");
-        Classroom classroom5 = new Classroom("509","лево","пятый");
-        Classroom classroom6 = new Classroom("504","лево","шестой");
-        Classroom classroom7 = new Classroom("501","лево","седьмой");
-        Classroom classroom8 = new Classroom("501б","лево","восьмой");
-        Classroom classroom9 = new Classroom("516а","право","первый");
-        Classroom classroom10 = new Classroom("514","право","второй");
-        Classroom classroom11 = new Classroom("510","право","третий");
-        Classroom classroom12 = new Classroom("508","право","четвертый");
-        Classroom classroom13 = new Classroom("507","право","пятый");
-        Classroom classroom14 = new Classroom("505","право","шестой");
-        Classroom classroom15 = new Classroom("503","право","седьмой");
-        Classroom classroom16 = new Classroom("502","право","восьмой");
-        Classroom classroom17 = new Classroom("501а","право","девятый");
+        Classroom classroom1 = new Classroom("515","По левой стороне","первый кабинет");
+        Classroom classroom2 = new Classroom("513","По левой стороне","второй кабинет");
+        Classroom classroom3 = new Classroom("512","По левой стороне","третий кабинет");
+        Classroom classroom4 = new Classroom("511","По левой стороне","четвертый кабинет");
+        Classroom classroom5 = new Classroom("509","По левой стороне","пятый кабинет");
+        Classroom classroom6 = new Classroom("504","По левой стороне","шестой кабинет");
+        Classroom classroom7 = new Classroom("501","По левой стороне","седьмой кабинет");
+        Classroom classroom8 = new Classroom("501б","По левой стороне","восьмой кабинет");
+        Classroom classroom9 = new Classroom("516а","По правой стороне","первый кабинет");
+        Classroom classroom10 = new Classroom("514","По правой стороне","второй кабинет");
+        Classroom classroom11 = new Classroom("510","По правой стороне","третий кабинет");
+        Classroom classroom12 = new Classroom("508","По правой стороне","четвертый кабинет");
+        Classroom classroom13 = new Classroom("507","По правой стороне","пятый кабинет");
+        Classroom classroom14 = new Classroom("505","По правой стороне","шестой кабинет");
+        Classroom classroom15 = new Classroom("503","По правой стороне","седьмой кабинет");
+        Classroom classroom16 = new Classroom("502","По правой стороне","восьмой кабинет");
+        Classroom classroom17 = new Classroom("501а","По правой стороне","девятый кабинет");
         classroom1.setHallway(hallway1);
         classroom2.setHallway(hallway1);
         classroom3.setHallway(hallway1);
@@ -1073,18 +1074,18 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         hallway1.addClassroom(classroom16);
         hallway1.addClassroom(classroom17);
 
-        Classroom classroom18 = new Classroom("518","право","первый");
-        Classroom classroom19 = new Classroom("519","право","второй");
-        Classroom classroom20 = new Classroom("519а","право","третий");
-        Classroom classroom21 = new Classroom("521","право","четвертый");
-        Classroom classroom28 = new Classroom("523","право","пятый");
-        Classroom classroom29 = new Classroom("530","право","пятый");
-        Classroom classroom22 = new Classroom("516","лево","первый");
-        Classroom classroom23 = new Classroom("517","лево","второй");
-        Classroom classroom24 = new Classroom("520","лево","третий");
-        Classroom classroom25 = new Classroom("521б","лево","третий");
-        Classroom classroom26 = new Classroom("525","лево","четвертый");
-        Classroom classroom27 = new Classroom("522","лево","пятый");
+        Classroom classroom18 = new Classroom("518","По правой стороне","первый кабинет");
+        Classroom classroom19 = new Classroom("519","По правой стороне","второй кабинет");
+        Classroom classroom20 = new Classroom("519а","По правой стороне","третий кабинет");
+        Classroom classroom21 = new Classroom("521","По правой стороне","четвертый кабинет");
+        Classroom classroom28 = new Classroom("523","По правой стороне","пятый кабинет");
+        Classroom classroom29 = new Classroom("530","По правой стороне","пятый кабинет");
+        Classroom classroom22 = new Classroom("516","По левой стороне","первый кабинет");
+        Classroom classroom23 = new Classroom("517","По левой стороне","второй кабинет");
+        Classroom classroom24 = new Classroom("520","По левой стороне","третий кабинет");
+        Classroom classroom25 = new Classroom("521б","По левой стороне","третий кабинет");
+        Classroom classroom26 = new Classroom("525","По левой стороне","четвертый кабинет");
+        Classroom classroom27 = new Classroom("522","По левой стороне","пятый кабинет");
 
         classroom18.setHallway(hallway2);
         classroom19.setHallway(hallway2);
@@ -1114,6 +1115,81 @@ public class ProcessingHandler extends ChannelInboundHandlerAdapter {
         hallwaySevice.updateHallway(hallway1);
         hallwaySevice.updateHallway(hallway2);
     }
+
+    public static List<String> buildRoute(String startRoomNumber, String endRoomNumber) throws Exception { //String corp,
+        List<String> route = new ArrayList<>();
+        HallwaySevice hallwaySevice = new HallwaySevice();
+        Classroom startRoom = hallwaySevice.getClassroom(startRoomNumber); //corp,
+        Hallway startHallway = startRoom.getHallway();
+        Classroom endRoom = hallwaySevice.getClassroom(endRoomNumber); //corp,
+        Hallway endHallway = endRoom.getHallway();
+        List<Hallway> hallways = pathFind(startHallway.getStartArea().getId(), endHallway.getEndArea().getId()); //, endHallway.getStartArea().getId()
+        for (int i = 0; i < hallways.size()-1; i++) {
+
+            if(hallways.get(i).getEndArea().getId().equals(hallways.get(i+1).getStartArea().getId())){
+                route.add(hallways.get(i).getOrientationStart());
+            }
+            else
+                route.add(hallways.get(i).getOrientationEnd());
+
+            if (hallways.size()-2 == i && hallways.get(i).getEndArea().getId().equals(hallways.get(i+1).getStartArea().getId()))
+                route.add(hallways.get(i+1).getOrientationStart());
+            else if(hallways.size()-2 == i && !hallways.get(i).getEndArea().getId().equals(hallways.get(i+1).getStartArea().getId()))
+                route.add(hallways.get(i+1).getOrientationEnd());
+
+        }
+        Classroom classroom = hallwaySevice.getClassroom(endRoomNumber);
+        route.add(classroom.getSide());
+        route.add(classroom.getPosition());
+        return route;
+    }
+    public static List<Hallway> pathFind(Integer startId, Integer endId) throws Exception {
+        Map<Integer, Integer> dickt = new HashMap<>();
+        HallwaySevice hallwaySevice = new HallwaySevice();
+        AreaService areaService = new AreaService();
+        Area startArea = areaService.findArea(startId);
+        List<Area> areas = areaService.findAllAreas();
+        for ( Area area: areas) {
+            if (area.getHousing().equals(startArea.getHousing())){
+                dickt.put(area.getId(), -1);
+            }
+        }
+        dickt.replace(startId, 0);
+        if (!dickt.containsKey(endId))
+            throw new Exception("Конечой площадки не существует в данном корпусе");
+        Integer step = 0;
+        while (dickt.get(endId) == -1){
+            for (Map.Entry<Integer, Integer> kV: dickt.entrySet()) {
+                if(kV.getValue().equals(step)){
+                    List<Hallway> hallways = hallwaySevice.getConnectedHallways(kV.getKey());
+                    for (Hallway h: hallways) {
+                        Integer otherEnd = hallwaySevice.getOtherEnd(h,kV.getKey()).getId();
+                        dickt.replace(otherEnd, -1,step+1);
+                    }
+                }
+            }
+            step++;
+        }
+        Integer currentAreaId = endId;
+        List<Hallway> route = new ArrayList<>();
+        while (!currentAreaId.equals(startId)){
+            List<Hallway> hallways = hallwaySevice.getConnectedHallways(currentAreaId);
+            Boolean found = false;
+            for (Hallway h: hallways) {
+                Integer otherEnd = hallwaySevice.getOtherEnd(h,currentAreaId).getId();
+                if (dickt.get(otherEnd) == dickt.get(currentAreaId)-1 ){
+                    route.add(0, h);
+                    currentAreaId = otherEnd;
+                    found = true;
+                    break;
+                }
+            }
+            if (!found)
+                throw new Exception();// если маршрут разорван
+        }
+        return route;
+    }
+
     public ResponseData getSchedule(String facultet, String direction, String group) throws IOException {
         Map<String, String> params = new HashMap<String, String>();
         params.put("action", "getfaculties");

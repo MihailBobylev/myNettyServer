@@ -5,6 +5,7 @@ import models.Classroom;
 import models.Hallway;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 
@@ -39,6 +40,15 @@ public class HallwayDAO {
 
     public Classroom findClassroomById(int id) {
         return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Classroom.class, id);
+    }
+
+    public List<Classroom> findClassroomByNumber(String number) { //String corp,
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        List<Classroom> corps =
+                session.createCriteria(Classroom.class)
+                        .add(Restrictions.eq("number", number))
+                        .list();
+        return corps;
     }
 
     public List<Hallway> findAll() {

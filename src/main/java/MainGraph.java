@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class MainGraph {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         // Граф
         /*AreaService areaService = new AreaService();
         Area area1 = new Area("E",3,"A");
@@ -204,6 +204,10 @@ public class MainGraph {
         p.FillThirdFloor();
         p.FillFourthFloor();
         p.FillFifthFloor();*/
+        /*List<String> result = p.buildRoute("330","109");
+        for (String s:result) {
+            System.out.println(s);
+        }*/
     }
 
 }

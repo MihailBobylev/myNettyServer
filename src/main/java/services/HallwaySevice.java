@@ -1,6 +1,7 @@
 package services;
 
 import dao.HallwayDAO;
+import models.Area;
 import models.Classroom;
 import models.Hallway;
 
@@ -34,5 +35,24 @@ public class HallwaySevice {
 
     public Classroom findClassroomById(int id) {
         return hallwaysDao.findClassroomById(id);
+    }
+    public List<Hallway> getConnectedHallways(int areaId){
+        List<Hallway> hallways = hallwaysDao.findAll();
+        hallways.removeIf(h -> (
+                h.getStartArea().getId() != areaId) && (h.getEndArea().getId() != areaId)
+        );
+        return hallways;
+    }
+    public Area getOtherEnd(Hallway hallway, Integer areaId){
+        if(hallway.getStartArea().getId().equals(areaId)){
+            return hallway.getEndArea();
+        }else {
+            return hallway.getStartArea();
+        }
+    }
+
+    public Classroom getClassroom(String number){ //String corp,
+        List<Classroom> classes = hallwaysDao.findClassroomByNumber(number); //corp,
+        return classes.get(0);
     }
 }
