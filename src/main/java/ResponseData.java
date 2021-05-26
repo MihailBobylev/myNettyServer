@@ -1,6 +1,6 @@
 public class ResponseData {
-    private String lessonName;
-    private String groupName;
+    private String lessonName = "lessonName";
+    private String groupName = "groupName";
 
     public String getLessonName() {
         return lessonName;
@@ -18,7 +18,7 @@ public class ResponseData {
         this.groupName = groupName;
     }
 
-    private String teacherName;
+    private String teacherName = "teacherName";
 
     public String getTeacherName() {
         return teacherName;
@@ -28,8 +28,8 @@ public class ResponseData {
         this.teacherName = teacherName;
     }
 
-    private String corps;
-    private String auditor;
+    private String corps = "corps";
+    private String auditor = "auditor";
 
     public String getCorps() {
         return corps;
@@ -47,8 +47,8 @@ public class ResponseData {
         this.auditor = auditor;
     }
 
-    private String lessonNumber;
-    private String lessonType;
+    private String lessonNumber = "lessonNumber";
+    private String lessonType = "lessonType";
 
     public String getLessonNumber() {
         return lessonNumber;
@@ -66,7 +66,7 @@ public class ResponseData {
         this.lessonType = lessonType;
     }
 
-    private String ways;
+    private String ways = "ways";
 
     public String getWays() {
         return ways;
@@ -76,8 +76,8 @@ public class ResponseData {
         this.ways = ways;
     }
 
-    String institute;
-    String direction;
+    String institute = "institute";
+    String direction = "direction";
 
     public String getInstitute() {
         return institute;

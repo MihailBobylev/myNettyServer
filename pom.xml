@@ -7,14 +7,34 @@
     <groupId>netyy</groupId>
     <artifactId>netyy</artifactId>
     <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <project.build.sourceEncoding>Cp866</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>Cp866</project.reporting.outputEncoding>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
                 <configuration>
-                    <source>8</source>
-                    <target>8</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.heroku.sdk</groupId>
+                <artifactId>heroku-maven-plugin</artifactId>
+                <version>3.0.4</version>
+                <configuration>
+                    <appName>gidserver</appName>
+                    <processTypes>
+                        <worker>
+                            java $JAVA_OPTS -cp target/classes:target/dependency/* NettyServer $PORT
+                        </worker>
+                    </processTypes>
                 </configuration>
             </plugin>
         </plugins>
@@ -36,22 +56,22 @@
             <artifactId>hibernate-core</artifactId>
             <version>5.2.12.Final</version> <!--5.4.10.Final-->
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.19</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc
         <dependency>
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
-            <version>3.20.1</version> <!--3.28.0-->
+            <version>3.20.1</version> &lt;!&ndash;3.28.0&ndash;&gt;
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.zsoltfabok/sqlite-dialect -->
+        &lt;!&ndash; https://mvnrepository.com/artifact/com.zsoltfabok/sqlite-dialect &ndash;&gt;
         <dependency>
             <groupId>com.zsoltfabok</groupId>
             <artifactId>sqlite-dialect</artifactId>
             <version>1.0</version>
-        </dependency>
-        <!--<dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>42.2.18</version>
         </dependency>-->
     </dependencies>
 
