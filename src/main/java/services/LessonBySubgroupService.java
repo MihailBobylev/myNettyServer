@@ -32,7 +32,9 @@ public class LessonBySubgroupService {
     public void deleteLesson(LessonBySubgroup lesson) {
         lessonBySubgroupDAO.delete(lesson);
     }
-
+    public void deleteAllLessonsBySubgroup() {
+        lessonBySubgroupDAO.deleteAll();
+    }
     public void updateLesson(LessonBySubgroup lesson) {
         lessonBySubgroupDAO.update(lesson);
     }

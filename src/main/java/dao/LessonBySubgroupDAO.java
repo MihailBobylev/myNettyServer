@@ -56,7 +56,13 @@ public class LessonBySubgroupDAO {
         tx1.commit();
         session.close();
     }
-
+    public void deleteAll() {
+        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+        session.createQuery("DELETE FROM lessonbysubgroup").executeUpdate();
+        tx1.commit();
+        session.close();
+    }
     public List<LessonBySubgroup> findAll() {
         List<LessonBySubgroup> lessons = (List<LessonBySubgroup>) HibernateSessionFactoryUtil.getSessionFactory().openSession().createQuery("From LessonBySubgroup").list();
         return lessons;

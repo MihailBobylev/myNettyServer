@@ -194,7 +194,7 @@ public class MainGraph {
 //        lessonBySubgroup.setLesson(lesson);
 //        lessonBySubgroup.setStudent(students);
 //        lessonBySubgroupDAO.save(lessonBySubgroup);
-        ProcessingHandler p = new ProcessingHandler();
+        //ProcessingHandler p = new ProcessingHandler();
         //p.FillAuds();
         //p.FillTeachers();
         //p.FillStudents();
