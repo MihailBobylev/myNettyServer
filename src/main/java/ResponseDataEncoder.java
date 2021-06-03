@@ -38,5 +38,17 @@ public class ResponseDataEncoder extends MessageToByteEncoder<ResponseData> {
 
         out.writeInt(msg.getDirection().length());
         out.writeCharSequence(msg.getDirection(), charset);
+
+        out.writeInt(msg.getNumberOfClass().length());
+        out.writeCharSequence(msg.getNumberOfClass(), charset);
+
+        out.writeInt(msg.getNumberOfDay().length());
+        out.writeCharSequence(msg.getNumberOfDay(), charset);
+
+        out.writeInt(msg.getNumberOfWeek().length());
+        out.writeCharSequence(msg.getNumberOfWeek(), charset);
+
+        out.writeInt(msg.getSubgroup().length());
+        out.writeCharSequence(msg.getSubgroup(), charset);
     }
 }

@@ -28,51 +28,59 @@ public class GetTimetable {
     String institute = "";
     String direction = "";
     String groupp = "";
+    String numberOfDay = "";
+    String numberOfClass = "";
+    String numberOfWeek = "";
+    String subgroup = "";
 
     public ResponseData getAudSchedule(RequestData requestData){
         ResponseData responseData = new ResponseData();
         audsSchedule = audsService.findByAud(requestData.getCorp(), requestData.getAuditor());
+        if (audsSchedule.size() == 0)
+            return responseData;
+
         allLessons =  lessonService.findByAudID(audsSchedule.get(0), requestData.getWeek(),requestData.getDayOfWeek(),requestData.getLessonNumber());
 
         if (allLessons.size() == 0){
             allLessons =  lessonService.findByAudID(audsSchedule.get(0), "2",requestData.getDayOfWeek(),requestData.getLessonNumber());
             if(allLessons.size() == 0)
-            {
-                responseData.setTeacherName("Неизвестно");
-                responseData.setLessonName("Неизвестно");
-                responseData.setLessonType("Неизвестно");
-                responseData.setGroupName("Неизвестно");
                 return responseData;
-            }
         }
         for (Lesson l: allLessons) {
             teacherName += l.getTeacher().getName() + "@";
             lessonName += l.getLessonByGroup() + "@";
             lessonType += l.getLessontype() + "@";
-            groupName += l.getSubgroup() + "@";
+            groupName += l.getGroupp() + "@";
+            auditor += l.getAud().getNumber() + "@";
+            numberOfDay += l.getNumberOfDay() + "@";
+            numberOfWeek += l.getNumberOfWeek() + "@";
+            numberOfClass += l.getNumberOfClass() + "@";
+            subgroup += l.getSubgroup() + "@";
         }
 
         responseData.setTeacherName(teacherName);
         responseData.setLessonName(lessonName);
         responseData.setLessonType(lessonType);
         responseData.setGroupName(groupName);
+        responseData.setAuditor(auditor);
+        responseData.setNumberOfDay(numberOfDay);
+        responseData.setNumberOfClass(numberOfClass);
+        responseData.setNumberOfWeek(numberOfWeek);
+        responseData.setSubgroup(subgroup);
         return responseData;
     }
     public ResponseData getTeacherSchedule(RequestData requestData){
         ResponseData responseData = new ResponseData();
         teacherSchedule =  teachersService.findTeacherByName(requestData.getTeacherName());
+        if(teacherSchedule.size() == 0)
+            return responseData;
+
         allLessons =  lessonService.findByTeacherID(teacherSchedule.get(0));
 
         Auds auds2;
-        if (allLessons.size() == 0){
-            responseData.setLessonNumber("Неизвестно");
-            responseData.setCorps("Неизвестно");
-            responseData.setAuditor("Неизвестно");
-            responseData.setLessonName("Неизвестно");
-            responseData.setLessonType("Неизвестно");
-            responseData.setGroupName("Неизвестно");
+        if (allLessons.size() == 0)
             return  responseData;
-        }
+
         for (Lesson l: allLessons) {
             auds2 = audsService.findAuds(l.getAud().getId());
             lessonNumber += l.getNumberOfClass() + "@";
@@ -80,7 +88,12 @@ public class GetTimetable {
             auditor += auds2.getNumber() + "@";
             lessonName += l.getLessonByGroup() + "@";
             lessonType += l.getLessontype() + "@";
-            groupName += l.getSubgroup() + "@";
+            groupName += l.getGroupp() + "@";
+            teacherName += l.getTeacher().getName() + "@";
+            subgroup += l.getSubgroup() + "@";
+            numberOfDay += l.getNumberOfDay() + "@";
+            numberOfWeek += l.getNumberOfWeek() + "@";
+            numberOfClass += l.getNumberOfClass() + "@";
         }
         responseData.setLessonNumber(lessonNumber);
         responseData.setCorps(corp);
@@ -88,21 +101,20 @@ public class GetTimetable {
         responseData.setLessonName(lessonName);
         responseData.setLessonType(lessonType);
         responseData.setGroupName(groupName);
+        responseData.setTeacherName(teacherName);
+        responseData.setNumberOfDay(numberOfDay);
+        responseData.setNumberOfClass(numberOfClass);
+        responseData.setNumberOfWeek(numberOfWeek);
+        responseData.setSubgroup(subgroup);
         return responseData;
     }
     public ResponseData getStudentsSchedule(RequestData requestData){
         ResponseData responseData = new ResponseData();
         allLessons = lessonService.findByGroup(requestData.getGroup());
 
-        if (allLessons.size() == 0){
-            responseData.setLessonNumber("Неизвестно");
-            responseData.setCorps("Неизвестно");
-            responseData.setAuditor("Неизвестно");
-            responseData.setLessonName("Неизвестно");
-            responseData.setLessonType("Неизвестно");
-            responseData.setTeacherName("Неизвестно");
+        if (allLessons.size() == 0)
             return responseData;
-        }
+
         for (Lesson l: allLessons) {
             Auds auds = audsService.findAuds(l.getId());
             lessonNumber += l.getNumberOfClass() + "@";
@@ -111,6 +123,11 @@ public class GetTimetable {
             lessonName += l.getLessonByGroup() + "@";
             lessonType += l.getLessontype() + "@";
             teacherName += l.getTeacher().getName() + "@";
+            groupName += l.getGroupp() + "@";
+            subgroup += l.getSubgroup() + "@";
+            numberOfDay += l.getNumberOfDay() + "@";
+            numberOfWeek += l.getNumberOfWeek() + "@";
+            numberOfClass += l.getNumberOfClass() + "@";
         }
         responseData.setLessonNumber(lessonNumber);
         responseData.setCorps(corp);
@@ -118,11 +135,19 @@ public class GetTimetable {
         responseData.setLessonName(lessonName);
         responseData.setLessonType(lessonType);
         responseData.setTeacherName(teacherName);
+        responseData.setGroupName(groupName);
+        responseData.setNumberOfDay(numberOfDay);
+        responseData.setNumberOfClass(numberOfClass);
+        responseData.setNumberOfWeek(numberOfWeek);
+        responseData.setSubgroup(subgroup);
         return responseData;
     }
     public ResponseData fillClientDB(){
         ResponseData responseData = new ResponseData();
         groupSchedule = studentsService.findAllStudents();// институт, направление, группа
+
+        if (groupSchedule.size() == 0)
+            return responseData;
 
         for (Students s: groupSchedule) {
             institute += s.getInstitute() + "@";
@@ -134,6 +159,8 @@ public class GetTimetable {
         responseData.setGroupName(groupp);
 
         teacherSchedule = teachersService.findAllTeachers();// имя преподавателя
+        if (teacherSchedule.size() == 0)
+            return responseData;
 
         for (Teachers t: teacherSchedule) {
             teacherName += t.getName() + "@";
@@ -141,6 +168,10 @@ public class GetTimetable {
         responseData.setTeacherName(teacherName);
 
         audsSchedule = audsService.findAllAuds();// корпуса и аудитории
+
+        if (audsSchedule.size() == 0)
+            return responseData;
+
         for (Auds a: audsSchedule) {
             corp += a.getCorp() + "@";
             auditor += a.getNumber() + "@";

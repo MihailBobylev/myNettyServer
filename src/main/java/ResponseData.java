@@ -1,6 +1,6 @@
 public class ResponseData {
-    private String lessonName = "lessonName";
-    private String groupName = "groupName";
+    private String lessonName = "Неизвестно";
+    private String groupName = "Неизвестно";
 
     public String getLessonName() {
         return lessonName;
@@ -18,7 +18,7 @@ public class ResponseData {
         this.groupName = groupName;
     }
 
-    private String teacherName = "teacherName";
+    private String teacherName = "Неизвестно";
 
     public String getTeacherName() {
         return teacherName;
@@ -28,8 +28,8 @@ public class ResponseData {
         this.teacherName = teacherName;
     }
 
-    private String corps = "corps";
-    private String auditor = "auditor";
+    private String corps = "Неизвестно";
+    private String auditor = "Неизвестно";
 
     public String getCorps() {
         return corps;
@@ -47,8 +47,8 @@ public class ResponseData {
         this.auditor = auditor;
     }
 
-    private String lessonNumber = "lessonNumber";
-    private String lessonType = "lessonType";
+    private String lessonNumber = "Неизвестно";
+    private String lessonType = "Неизвестно";
 
     public String getLessonNumber() {
         return lessonNumber;
@@ -66,7 +66,7 @@ public class ResponseData {
         this.lessonType = lessonType;
     }
 
-    private String ways = "ways";
+    private String ways = "Неизвестно";
 
     public String getWays() {
         return ways;
@@ -76,8 +76,45 @@ public class ResponseData {
         this.ways = ways;
     }
 
-    String institute = "institute";
-    String direction = "direction";
+    String institute = "Неизвестно";
+    String direction = "Неизвестно";
+
+    String numberOfDay = "Неизвестно";
+    String numberOfWeek = "Неизвестно";
+    String numberOfClass = "Неизвестно";
+    String subgroup = "Неизвестно";
+
+    public String getNumberOfDay() {
+        return numberOfDay;
+    }
+
+    public void setNumberOfDay(String numberOfDay) {
+        this.numberOfDay = numberOfDay;
+    }
+
+    public String getNumberOfWeek() {
+        return numberOfWeek;
+    }
+
+    public void setNumberOfWeek(String numberOfWeek) {
+        this.numberOfWeek = numberOfWeek;
+    }
+
+    public String getNumberOfClass() {
+        return numberOfClass;
+    }
+
+    public void setNumberOfClass(String numberOfClass) {
+        this.numberOfClass = numberOfClass;
+    }
+
+    public String getSubgroup() {
+        return subgroup;
+    }
+
+    public void setSubgroup(String subgroup) {
+        this.subgroup = subgroup;
+    }
 
     public String getInstitute() {
         return institute;
